@@ -1,10 +1,19 @@
 import { framer } from "framer-plugin";
 import "./App.css";
 import { Login, Tokens } from "./components/Login";
-import { useState } from "react";
+import { useCallback, useState } from "react";
 import { PolarProviders } from "./providers";
 import { buildAPIClient } from "./api/polar";
 import { ProductsView } from "./containers/ProductsView";
+import {
+  Route,
+  Routes,
+  Navigate,
+  useNavigate,
+  MemoryRouter,
+} from "react-router";
+import { ProductView } from "./containers/ProductView";
+import { OrganizationLayout } from "./layouts/OrganizationLayout";
 
 framer.showUI({
   position: "top right",
@@ -13,17 +22,37 @@ framer.showUI({
 });
 
 export function App() {
-  const [tokens, setTokens] = useState<Tokens | null>(null);
-
-  if (!tokens) {
-    return <Login onSuccess={setTokens} />;
-  }
-
   return (
-    <PolarProviders polar={buildAPIClient(tokens.access_token)}>
-      <main className="p-4 flex flex-col gap-4 overflow-y-auto">
-        <ProductsView />
+    <MemoryRouter>
+      <main className="flex flex-col p-0">
+        <PluginRoutes />
       </main>
-    </PolarProviders>
+    </MemoryRouter>
   );
 }
+
+const PluginRoutes = () => {
+  const [tokens, setTokens] = useState<Tokens | null>(null);
+  const navigate = useNavigate();
+
+  const onLoginSuccess = useCallback(
+    (tokens: Tokens) => {
+      setTokens(tokens);
+      navigate("/");
+    },
+    [navigate]
+  );
+
+  return (
+    <PolarProviders polar={buildAPIClient(tokens?.access_token ?? "")}>
+      <Routes>
+        <Route index path="/login" element={<Login onSuccess={onLoginSuccess} />} />
+        <Route path="/" element={<OrganizationLayout />}>
+          <Route path="/:organizationId/products" element={<ProductsView />} />
+          <Route path="/:organizationId/products/:id" element={<ProductView />} />
+        </Route>
+        <Route path="*" element={<Navigate to="/" />} />
+      </Routes>
+    </PolarProviders>
+  );
+};

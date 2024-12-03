@@ -12,3 +12,13 @@ export const useProducts = (params: ProductsListRequest) => {
     enabled: !!params.organizationId,
   });
 };
+
+export const useProduct = (id?: string) => {
+  const polar = useContext(PolarAPIContext);
+
+  return useQuery({
+    queryKey: ["product", id],
+    queryFn: () => polar.products.get({ id: id ?? "" }),
+    enabled: !!id,
+  });
+};

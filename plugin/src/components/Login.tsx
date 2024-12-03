@@ -77,10 +77,8 @@ export const Login = ({ onSuccess }: LoginProps) => {
   };
 
   return (
-    <main>
       <button className="framer-button-primary" onClick={login}>
         Login
       </button>
-    </main>
   );
 };
