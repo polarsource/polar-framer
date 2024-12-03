@@ -38,7 +38,7 @@ const PluginRoutes = () => {
   const onLoginSuccess = useCallback(
     (tokens: Tokens) => {
       setTokens(tokens);
-      navigate("/");
+      navigate("/products");
     },
     [navigate]
   );
@@ -46,10 +46,10 @@ const PluginRoutes = () => {
   return (
     <PolarProviders polar={buildAPIClient(tokens?.access_token ?? "")}>
       <Routes>
-        <Route index path="/login" element={<Login onSuccess={onLoginSuccess} />} />
-        <Route path="/" element={<OrganizationLayout />}>
-          <Route path="/:organizationId/products" element={<ProductsView />} />
-          <Route path="/:organizationId/products/:id" element={<ProductView />} />
+        <Route index path="/" element={<Login onSuccess={onLoginSuccess} />} />
+        <Route path="/products" element={<OrganizationLayout />}>
+          <Route index element={<ProductsView />} />
+          <Route path=":id" element={<ProductView />} />
         </Route>
         <Route path="*" element={<Navigate to="/" />} />
       </Routes>

@@ -1,13 +1,31 @@
-import { createContext, PropsWithChildren } from "react";
+import { createContext, PropsWithChildren, useState } from "react";
 import { QueryClientProvider, QueryClient } from "@tanstack/react-query";
 import { Polar } from "@polar-sh/sdk";
+import { Organization } from "@polar-sh/sdk/models/components";
 
+// @ts-expect-error
 export const queryClient = new QueryClient();
 
 // @ts-expect-error
 export const PolarAPIContext = createContext<Polar>(() => {
   throw new Error("PolarAPIContext not found");
 });
+
+// @ts-expect-error
+export const OrganizationContext = createContext<{
+  organization: Organization | null;
+  setOrganization: (organization: Organization | null) => void;
+}>({ organization: null, setOrganization: () => {} });
+
+const OrganizationProvider = ({ children }: PropsWithChildren) => {
+  const [organization, setOrganization] = useState<Organization | null>(null);
+
+  return (
+    <OrganizationContext.Provider value={{ organization, setOrganization }}>
+      {children}
+    </OrganizationContext.Provider>
+  );
+};
 
 export const PolarAPIProvider = ({
   children,
@@ -30,7 +48,9 @@ export const PolarProviders = ({
 }: PropsWithChildren<{ polar: Polar }>) => {
   return (
     <PolarAPIProvider polar={polar}>
-      <QueryClientProvider client={queryClient}>{children}</QueryClientProvider>
+      <QueryClientProvider client={queryClient}>
+        <OrganizationProvider>{children}</OrganizationProvider>
+      </QueryClientProvider>
     </PolarAPIProvider>
   );
 };

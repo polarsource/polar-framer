@@ -2,13 +2,15 @@ import { useProducts } from "../hooks/products";
 import { Product } from "@polar-sh/sdk/models/components";
 import { AddOutlined } from "@mui/icons-material";
 import { Link, useParams } from "react-router";
+import { useContext } from "react";
+import { OrganizationContext } from "../providers";
 
 export const ProductsView = () => {
-  const { organizationId } = useParams();
-
+  const { organization } = useContext(OrganizationContext);
+  
   const { data: products } = useProducts({
     limit: 100,
-    organizationId,
+    organizationId: organization?.id,
     isArchived: false,
   });
 

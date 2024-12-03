@@ -1,26 +1,18 @@
-import { useEffect, useMemo } from "react";
+import { useEffect, useContext } from "react";
 import { Avatar } from "../components/Avatar";
 import { useOrganizations } from "../hooks/organizations";
-import { Outlet, useLocation, useNavigate, useParams } from "react-router";
+import { Outlet } from "react-router";
+import { OrganizationContext } from "../providers";
 
 export const OrganizationLayout = () => {
-  const { organizationId } = useParams();
-
+  const { organization, setOrganization } = useContext(OrganizationContext);
   const { data: organizations } = useOrganizations({ limit: 100 });
 
-  const organization = useMemo(
-    () => organizations?.result.items.find((o) => o.id === organizationId),
-    [organizations, organizationId]
-  );
-
-  const navigate = useNavigate();
-  const { pathname } = useLocation();
-
   useEffect(() => {
-    if (organizationId && !pathname.includes("/products")) {
-      navigate(`/${organizationId}/products`);
+    if (organizations?.result.items.length && !organization) {
+      setOrganization(organizations?.result.items[0]);
     }
-  }, [organizationId, navigate, pathname]);
+  }, [organizations, organization, setOrganization]);
 
   return (
     <div className="flex w-full h-full flex-col">
@@ -28,8 +20,13 @@ export const OrganizationLayout = () => {
         <Avatar url={organization?.avatarUrl ?? ""} />
         <select
           className="px-3 flex-grow bg-neutral-900"
-          value={organizationId}
-          onChange={(e) => navigate(`/${e.target.value}/products`)}
+          value={organization?.id}
+          onChange={(e) =>
+            setOrganization(
+              organizations?.result.items.find((o) => o.id === e.target.value) ??
+                null
+            )
+          }
         >
           {organizations?.result.items.map((organization) => (
             <option key={organization.id} value={organization.id}>
