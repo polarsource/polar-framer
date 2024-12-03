@@ -25,7 +25,7 @@ yarn-error.log\*
 # local env files
 
 .env\*.local
-.dev\*.vars
+.dev.vars
 
 # Packed plugin
 
