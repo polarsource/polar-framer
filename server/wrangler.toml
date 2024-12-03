@@ -9,3 +9,7 @@ kv_namespaces = [
 
 [vars]
 PLUGIN_PARENT_DOMAIN = "plugins.framercdn.com"
+PLUGIN_ID="a4cab2"
+AUTHORIZE_ENDPOINT="https://polar.sh/oauth2/authorize"
+TOKEN_ENDPOINT="https://api.polar.sh/v1/oauth2/token"
+SCOPE="openid,profile,email,user:read,organizations:read,organizations:write,checkout_links:read,checkout_links:write,products:read,products:write"
