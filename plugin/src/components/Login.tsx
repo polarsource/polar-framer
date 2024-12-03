@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef } from "react";
 
 const isLocal = () => false; //window.location.hostname.includes("localhost");
 
@@ -7,14 +7,17 @@ const AUTH_BACKEND = isLocal()
   ? "https://localhost:8787"
   : "https://framer.polar.sh";
 
-interface Tokens {
+export interface Tokens {
   access_token: string;
   refresh_token: string;
 }
 
-export const Login = () => {
+interface LoginProps {
+  onSuccess(tokens: Tokens): void;
+}
+
+export const Login = ({ onSuccess }: LoginProps) => {
   const pollInterval = useRef<number>();
-  const [tokens, setTokens] = useState<Tokens>();
 
   useEffect(() => {
     // Check for tokens on first load.
@@ -22,8 +25,8 @@ export const Login = () => {
     if (!serializedTokens) return;
 
     const tokens = JSON.parse(serializedTokens);
-    setTokens(tokens);
-  }, []);
+    onSuccess(tokens);
+  }, [onSuccess]);
 
   const pollForTokens = (readKey: string): Promise<Tokens> => {
     // Clear any previous interval timers, one may already exist
@@ -70,14 +73,14 @@ export const Login = () => {
     window.localStorage.setItem("tokens", JSON.stringify(tokens));
 
     // Update the component state.
-    setTokens(tokens);
+    onSuccess(tokens);
   };
 
-  console.log(tokens);
-
   return (
-    <button className="framer-button-primary" onClick={login}>
-      Login
-    </button>
+    <main>
+      <button className="framer-button-primary" onClick={login}>
+        Login
+      </button>
+    </main>
   );
 };
