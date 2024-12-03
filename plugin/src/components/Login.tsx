@@ -73,5 +73,11 @@ export const Login = () => {
     setTokens(tokens);
   };
 
-  return <div />;
+  console.log(tokens);
+
+  return (
+    <button className="framer-button-primary" onClick={login}>
+      Login
+    </button>
+  );
 };

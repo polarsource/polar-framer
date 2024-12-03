@@ -22,7 +22,7 @@ async function handleRequest(request: Request, env: Env) {
 
     // Scope is optional for some providers.
     if (env.SCOPE) {
-      authorizeParams.append("scope", env.SCOPE);
+      authorizeParams.append("scope", env.SCOPE.split(",").join(" "));
     }
 
     // The write key is stored in the `state` param since this will be
@@ -76,13 +76,14 @@ async function handleRequest(request: Request, env: Env) {
     tokenParams.append("grant_type", "authorization_code");
     tokenParams.append("code", authorizationCode);
 
-    const tokenUrl = new URL(env.TOKEN_ENDPOINT);
-    tokenUrl.search = tokenParams.toString();
-
     // This additional POST request retrieves the access token and expiry
     // information used for further API requests to the provider.
-    const tokenResponse = await fetch(tokenUrl.toString(), {
+    const tokenResponse = await fetch(env.TOKEN_ENDPOINT, {
       method: "POST",
+      headers: {
+        "Content-Type": "application/x-www-form-urlencoded",
+      },
+      body: tokenParams.toString(),
     });
 
     if (tokenResponse.status !== 200) {
@@ -108,13 +109,13 @@ async function handleRequest(request: Request, env: Env) {
 
     return new Response(
       getHTMLTemplate(
-        "Authentication successful! You can close this window and return to Framer."
+        "Authentication successful! You can close this window and return to Framer.",
       ),
       {
         headers: {
           "Content-Type": "text/html",
         },
-      }
+      },
     );
   }
 
@@ -216,7 +217,7 @@ function addCorsHeaders(request: Request, response: Response, env: Env) {
 
   headers.set(
     "Access-Control-Allow-Origin",
-    getCORSAllowOriginHeader(request, env)
+    getCORSAllowOriginHeader(request, env),
   );
 
   return new Response(response.body, {
