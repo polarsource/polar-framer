@@ -4,11 +4,12 @@
 /.pnp
 .pnp.js
 .yarn
+.wrangler
 
 # misc
 
 .DS_Store
-\*.pem
+*.pem
 
 # files
 
