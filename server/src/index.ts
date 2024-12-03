@@ -33,7 +33,7 @@ async function handleRequest(request: Request, env: Env) {
     const authorizeUrl = new URL(env.AUTHORIZE_ENDPOINT);
     authorizeUrl.search = authorizeParams.toString();
 
-    await env.keyValueStore.put(`readKey:${writeKey}`, readKey, {
+    await env["polar-framer"].put(`readKey:${writeKey}`, readKey, {
       expirationTtl: 60,
     });
 
@@ -92,7 +92,7 @@ async function handleRequest(request: Request, env: Env) {
       });
     }
 
-    const readKey = await env.keyValueStore.get(`readKey:${writeKey}`);
+    const readKey = await env["polar-framer"].get(`readKey:${writeKey}`);
 
     if (!readKey) {
       return new Response("No read key found in storage", {
@@ -103,7 +103,7 @@ async function handleRequest(request: Request, env: Env) {
     // Store the tokens temporarily inside a key value store. This will be
     // retrieved when the plugin polls for them.
     const tokens = (await tokenResponse.json()) as unknown;
-    await env.keyValueStore.put(`tokens:${readKey}`, JSON.stringify(tokens), {
+    await env["polar-framer"].put(`tokens:${readKey}`, JSON.stringify(tokens), {
       expirationTtl: 300,
     });
 
@@ -128,7 +128,7 @@ async function handleRequest(request: Request, env: Env) {
       });
     }
 
-    const tokens = await env.keyValueStore.get(`tokens:${readKey}`);
+    const tokens = await env["polar-framer"].get(`tokens:${readKey}`);
 
     if (!tokens) {
       return new Response(null, {
@@ -138,7 +138,7 @@ async function handleRequest(request: Request, env: Env) {
 
     // Even though the tokens have an expiry, it's important to delete them on
     // our side to reduce the reliability of storing user's sensitive data.
-    await env.keyValueStore.delete(`tokens:${readKey}`);
+    await env["polar-framer"].delete(`tokens:${readKey}`);
 
     return new Response(tokens, {
       headers: {

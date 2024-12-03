@@ -1,15 +1,15 @@
 import { useEffect, useRef, useState } from "react";
 
-const isLocal = () => window.location.hostname.includes("localhost");
+const isLocal = () => false; //window.location.hostname.includes("localhost");
 
 // Set a global variable with the endpoint.
 const AUTH_BACKEND = isLocal()
   ? "https://localhost:8787"
-  : "https://example.com";
+  : "https://framer.polar.sh";
 
 interface Tokens {
-  accessToken: string;
-  refreshToken: string;
+  access_token: string;
+  refresh_token: string;
 }
 
 export const Login = () => {
@@ -35,7 +35,7 @@ export const Login = () => {
     return new Promise((resolve) => {
       pollInterval.current = setInterval(async () => {
         const response = await fetch(
-          `https://localhost:8787/poll?readKey=${readKey}`,
+          `${AUTH_BACKEND}/poll?readKey=${readKey}`,
           { method: "POST" },
         );
 

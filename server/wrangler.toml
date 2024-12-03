@@ -1,10 +1,10 @@
 #:schema node_modules/wrangler/config-schema.json
 name = "polar-framer"
 main = "src/index.ts"
-compatibility_date = "2024-12-03"
+compatibility_date = "2024-05-24"
 compatibility_flags = ["nodejs_compat"]
 kv_namespaces = [
-  { binding = "keyValueStore", id = "5f1cbf9a64964ae5be8464cc2882e58c" },
+  { binding = "polar-framer", id = "cd711711ac8647bca3fabac9967521d1" },
 ]
 
 [vars]
