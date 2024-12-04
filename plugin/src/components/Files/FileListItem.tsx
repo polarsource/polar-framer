@@ -72,7 +72,7 @@ export const FileListItem = ({
         </button>
       )}
       {isUploading && (
-        <div className="absolute left-0 top-0 h-full w-full bg-black opacity-50"></div>
+        <div className="absolute left-0 top-0 h-full w-full bg-black rounded-2xl opacity-50"></div>
       )}
     </div>
   )

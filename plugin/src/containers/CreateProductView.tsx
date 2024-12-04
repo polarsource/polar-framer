@@ -74,14 +74,24 @@ export const CreateProductView = () => {
         </form>
       </Form>
 
-      <Button
-        className="rounded-full"
-        size="sm"
-        onClick={handleSubmit(onSubmit)}
-        disabled={loading}
-      >
-        Create Product
-      </Button>
+      <div className="flex flex-col gap-y-2">
+        <Button
+          className="rounded-full"
+          size="sm"
+          onClick={handleSubmit(onSubmit)}
+          disabled={loading}
+        >
+          Create Product
+        </Button>
+        <Button
+          className="rounded-full"
+          size="sm"
+          variant="ghost"
+          onClick={() => navigate(`/products`)}
+        >
+          Cancel
+        </Button>
+      </div>
     </div>
   );
 };

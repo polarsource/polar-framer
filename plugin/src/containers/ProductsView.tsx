@@ -17,7 +17,7 @@ export const ProductsView = () => {
   return (
     <>
       <div className="flex flex-row items-center p-4 gap-x-4 justify-between">
-        <h3 className="text-base">Products</h3>
+        <h3 className="text-sm font-medium">Products</h3>
         <button
           className="bg-blue-500 w-6 h-6 flex flex-col items-center justify-center rounded-full"
           onClick={() => navigate("/products/new")}
