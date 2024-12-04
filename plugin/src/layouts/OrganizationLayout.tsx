@@ -4,6 +4,8 @@ import { useOrganizations } from "../hooks/organizations";
 import { Link, Outlet, useNavigate } from "react-router";
 import { OrganizationContext } from "../providers";
 import { Organization } from "@polar-sh/sdk/models/components";
+import { Button } from "@/components/ui/button";
+import { AddOutlined } from "@mui/icons-material";
 
 export const OrganizationLayout = () => {
   const { organization, setOrganization } = useContext(OrganizationContext);
@@ -24,9 +26,9 @@ export const OrganizationLayout = () => {
 
   return (
     <div className="flex w-full h-full flex-col">
-      <div className="flex p-4 flex-row items-center gap-x-4 border-b border-white/5">
+      <div className="flex p-4 w-full flex-row items-center gap-x-4 border-b border-white/5">
         <Link to="/products">
-          <Avatar url={organization?.avatarUrl ?? ""} />
+          <Avatar url={organization?.avatarUrl ?? ""} name={organization?.name ?? ""} />
         </Link>
         <select
           className="px-3 flex-grow bg-neutral-900"
@@ -39,6 +41,9 @@ export const OrganizationLayout = () => {
             </option>
           ))}
         </select>
+        <Button size="icon" className="text-white rounded-full h-7 w-7" variant="ghost" onClick={() => navigate("/onboarding")}>
+          <AddOutlined fontSize="small" />
+        </Button>
       </div>
       <Outlet />
     </div>

@@ -1,6 +1,6 @@
 import { framer } from "framer-plugin";
 import "./App.css";
-import { Login, Tokens } from "./containers/Login";
+import { LoginView, Tokens } from "./containers/LoginView";
 import { useCallback, useState } from "react";
 import { PolarProviders } from "./providers";
 import { buildAPIClient } from "./api/polar";
@@ -15,6 +15,7 @@ import {
 import { ProductView } from "./containers/ProductView";
 import { OrganizationLayout } from "./layouts/OrganizationLayout";
 import { CreateProductView } from "./containers/CreateProductView";
+import { OnboardingView } from "./containers/OnboardingView";
 
 framer.showUI({
   position: "top right",
@@ -39,7 +40,7 @@ const PluginRoutes = () => {
   const onLoginSuccess = useCallback(
     (tokens: Tokens) => {
       setTokens(tokens);
-      navigate("/products");
+      navigate("/onboarding");
     },
     [navigate]
   );
@@ -47,7 +48,8 @@ const PluginRoutes = () => {
   return (
     <PolarProviders polar={buildAPIClient(tokens?.access_token ?? "")}>
       <Routes>
-        <Route index path="/" element={<Login onSuccess={onLoginSuccess} />} />
+        <Route index path="/" element={<LoginView onSuccess={onLoginSuccess} />} />
+        <Route path="/onboarding" element={<OnboardingView />} />
         <Route path="/products" element={<OrganizationLayout />}>
           <Route index element={<ProductsView />} />
           <Route path=":id" element={<ProductView />} />

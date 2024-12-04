@@ -1,9 +1,9 @@
 import LogoIcon from "@/components/LogoIcon";
 import { Button } from "@/components/ui/button";
+import { isLocal } from "@/utils";
 import { KeyboardArrowRight } from "@mui/icons-material";
 import { useEffect, useRef } from "react";
 
-const isLocal = () => false; //window.location.hostname.includes("localhost");
 
 // Set a global variable with the endpoint.
 const AUTH_BACKEND = isLocal()
@@ -15,11 +15,11 @@ export interface Tokens {
   refresh_token: string;
 }
 
-interface LoginProps {
+interface LoginViewProps {
   onSuccess(tokens: Tokens): void;
 }
 
-export const Login = ({ onSuccess }: LoginProps) => {
+export const LoginView = ({ onSuccess }: LoginViewProps) => {
   const pollInterval = useRef<number>();
 
   useEffect(() => {
