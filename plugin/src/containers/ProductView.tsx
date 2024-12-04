@@ -1,4 +1,4 @@
-import { useNavigate, useParams } from "react-router";
+import { Link, useNavigate, useParams } from "react-router";
 import { useProduct } from "../hooks/products";
 
 export const ProductView = () => {
@@ -11,13 +11,13 @@ export const ProductView = () => {
   const media = product.medias[0];
 
   return (
-    <div className="flex flex-col gap-4">
-      <button
-        className="text-sm bg-neutral-800 hover:bg-neutral-700 w-full flex transition-colors duration-75 p-2 rounded-md"
-        onClick={() => navigate("/products")}
+    <div className="flex flex-col gap-4 p-4">
+      <Link
+        to="/products"
+        className="text-sm text-blue-500 hover:text-blue-400 transition-colors duration-75"
       >
         Back to products
-      </button>
+      </Link>
       <h1 className="text-xl font-medium">{product.name}</h1>
       {media && (
         <img

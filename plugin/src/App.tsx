@@ -1,7 +1,7 @@
 import { framer } from "framer-plugin";
 import "./App.css";
 import { Login, Tokens } from "./components/Login";
-import { useCallback, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { PolarProviders } from "./providers";
 import { buildAPIClient } from "./api/polar";
 import { ProductsView } from "./containers/ProductsView";
@@ -14,6 +14,7 @@ import {
 } from "react-router";
 import { ProductView } from "./containers/ProductView";
 import { OrganizationLayout } from "./layouts/OrganizationLayout";
+import { CreateProductView } from "./containers/CreateProductView";
 
 framer.showUI({
   position: "top right",
@@ -50,6 +51,7 @@ const PluginRoutes = () => {
         <Route path="/products" element={<OrganizationLayout />}>
           <Route index element={<ProductsView />} />
           <Route path=":id" element={<ProductView />} />
+          <Route path="new" element={<CreateProductView />} />
         </Route>
         <Route path="*" element={<Navigate to="/" />} />
       </Routes>

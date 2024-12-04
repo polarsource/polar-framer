@@ -1,15 +1,17 @@
 import { ProductsListRequest } from "@polar-sh/sdk/models/operations";
-import { useQuery } from "@tanstack/react-query";
+import { useQuery, useMutation } from "@tanstack/react-query";
 import { useContext } from "react";
-import { PolarAPIContext } from "../providers";
+import { PolarAPIContext, queryClient } from "../providers";
+import { ProductCreate } from "@polar-sh/sdk/models/components";
+import { Organization } from "@polar-sh/sdk/models/components";
 
-export const useProducts = (params: ProductsListRequest) => {
+export const useProducts = ({organizationId, ...params}: ProductsListRequest) => {
   const polar = useContext(PolarAPIContext);
 
   return useQuery({
-    queryKey: ["products", params],
+    queryKey: ["products", organizationId, params],
     queryFn: () => polar.products.list(params),
-    enabled: !!params.organizationId,
+    enabled: !!organizationId,
   });
 };
 
@@ -22,3 +24,18 @@ export const useProduct = (id?: string) => {
     enabled: !!id,
   });
 };
+
+export const useCreateProduct = (organization?: Organization) => {
+  const polar = useContext(PolarAPIContext);
+
+  return  useMutation({
+    mutationFn: (body: ProductCreate) => {
+      return polar.products.create(body)
+    },
+    onSuccess: async () => {
+      queryClient.invalidateQueries({
+        queryKey: ['products', organization?.id],
+      })
+    },
+  })
+}

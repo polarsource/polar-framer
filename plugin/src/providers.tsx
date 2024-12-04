@@ -11,14 +11,14 @@ export const PolarAPIContext = createContext<Polar>(() => {
   throw new Error("PolarAPIContext not found");
 });
 
-// @ts-expect-error
+// @ts-expect-error 
 export const OrganizationContext = createContext<{
-  organization: Organization | null;
-  setOrganization: (organization: Organization | null) => void;
-}>({ organization: null, setOrganization: () => {} });
+  organization: Organization | undefined;
+  setOrganization: (organization: Organization | undefined) => void;
+}>({ organization: undefined, setOrganization: () => {} });
 
 const OrganizationProvider = ({ children }: PropsWithChildren) => {
-  const [organization, setOrganization] = useState<Organization | null>(null);
+  const [organization, setOrganization] = useState<Organization | undefined>(undefined);
 
   return (
     <OrganizationContext.Provider value={{ organization, setOrganization }}>
