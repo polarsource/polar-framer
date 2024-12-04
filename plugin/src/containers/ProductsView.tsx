@@ -1,7 +1,7 @@
 import { useProducts } from "../hooks/products";
 import { Product } from "@polar-sh/sdk/models/components";
 import { AddOutlined } from "@mui/icons-material";
-import { Link, useNavigate, useParams } from "react-router";
+import { Link, useNavigate } from "react-router";
 import { useContext } from "react";
 import { OrganizationContext } from "../providers";
 
@@ -42,13 +42,13 @@ export const ProductsView = () => {
 
 const Skeleton = () => {
   return (
-    <div className="bg-neutral-900 rounded-md h-12 w-full animate-pulse" />
+    <div className="bg-neutral-900 rounded-xl h-16 w-full animate-pulse" />
   );
 };
 
 const LoadingView = () => {
   return (
-    <div className="flex flex-col gap-2 p-4">
+    <div className="flex flex-col gap-2 p-4 pt-0">
       <Skeleton />
       <Skeleton />
       <Skeleton />

@@ -91,6 +91,9 @@ const ProductMediasField = ({
     initialFiles: value || [],
   })
 
+
+  console.log(files)
+
   return (
     <>
       <div className="grid grid-cols-2 gap-3 [&>div>*]:aspect-video">

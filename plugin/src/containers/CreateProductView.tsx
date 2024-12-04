@@ -1,4 +1,6 @@
-import ProductForm, { ProductFullMediasMixin } from "@/components/Products/ProductForm";
+import ProductForm, {
+  ProductFullMediasMixin,
+} from "@/components/Products/ProductForm";
 import { Button } from "@/components/ui/button";
 import { Form } from "@/components/ui/form";
 import { useCreateProduct } from "@/hooks/products";
@@ -23,7 +25,7 @@ export const CreateProductView = () => {
           {
             type: ProductPriceType.OneTime,
             priceAmount: undefined,
-            priceCurrency: 'usd',
+            priceCurrency: "usd",
           },
         ],
       },
@@ -34,39 +36,35 @@ export const CreateProductView = () => {
       organizationId: organization?.id,
     },
   });
-  const { handleSubmit } = form
+  const { handleSubmit } = form;
 
-  const createProduct = useCreateProduct(organization)
+  const createProduct = useCreateProduct(organization);
 
   const onSubmit = useCallback(
     async (productCreate: ProductCreate & ProductFullMediasMixin) => {
       try {
-        setLoading(true)
-        const { full_medias, ...productCreateRest } = productCreate
-        
-        const product = await createProduct.mutateAsync({
+        setLoading(true);
+        const { full_medias, ...productCreateRest } = productCreate;
+
+        await createProduct.mutateAsync({
           ...productCreateRest,
           medias: full_medias.map((media) => media.id),
-        })
- 
-        navigate(`/${organization?.slug}/products`)
+        });
+
+        navigate(`/${organization?.slug}/products`);
       } finally {
-        setLoading(false)
+        setLoading(false);
       }
     },
-    [
-      organization,
-      navigate,
-      createProduct,
-    ],
-  )
+    [organization, navigate, createProduct]
+  );
 
   if (!organization) {
     return <LoadingView />;
   }
 
   return (
-    <div className="flex flex-col gap-4 p-4">
+    <div className="flex flex-col gap-8 p-4 overflow-y-auto">
       <Form {...form}>
         <form
           onSubmit={handleSubmit(onSubmit)}
@@ -76,7 +74,14 @@ export const CreateProductView = () => {
         </form>
       </Form>
 
-      <Button onClick={handleSubmit(onSubmit)} disabled={loading}>Create Product</Button>
+      <Button
+        className="rounded-full"
+        size="sm"
+        onClick={handleSubmit(onSubmit)}
+        disabled={loading}
+      >
+        Create Product
+      </Button>
     </div>
   );
 };

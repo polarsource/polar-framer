@@ -2,13 +2,33 @@
 
 import { ErrorMessage } from "@hookform/error-message";
 import { ClearOutlined } from "@mui/icons-material";
-import { useFieldArray, UseFieldArrayReturn, useFormContext } from "react-hook-form";
+import {
+  useFieldArray,
+  UseFieldArrayReturn,
+  useFormContext,
+} from "react-hook-form";
 import { ProductFormType } from "./ProductForm";
-import { ProductPrice, ProductPriceType, SubscriptionRecurringInterval } from "@polar-sh/sdk/models/components";
-import { FormControl, FormField, FormItem, FormLabel, FormMessage } from "../ui/form";
+import {
+  ProductPrice,
+  ProductPriceType,
+  SubscriptionRecurringInterval,
+} from "@polar-sh/sdk/models/components";
+import {
+  FormControl,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormMessage,
+} from "../ui/form";
 import { useEffect, useMemo, useState } from "react";
 import { Tabs, TabsList, TabsTrigger } from "../ui/tabs";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "../ui/select";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "../ui/select";
 import { Button } from "../ui/button";
 import MoneyInput from "../MoneyInput";
 
@@ -30,10 +50,7 @@ export const ProductPriceItem: React.FC<ProductPriceItemProps> = ({
 
   return (
     <div className="flex items-center gap-2">
-      <input
-        type="hidden"
-        {...register(`prices.${index}.recurringInterval`)}
-      />
+      <input type="hidden" {...register(`prices.${index}.recurringInterval`)} />
       <input type="hidden" {...register(`prices.${index}.id`)} />
       <input type="hidden" {...register(`prices.${index}.type`)} />
       <input type="hidden" {...register(`prices.${index}.amountType`)} />
@@ -47,7 +64,12 @@ export const ProductPriceItem: React.FC<ProductPriceItemProps> = ({
         render={({ field }) => {
           return (
             <FormItem className="grow">
-              <div className="flex items-center gap-2">
+              <div className="flex items-center gap-3">
+                {recurringInterval && (
+                  <span className="text-xs text-neutral-500 w-16">
+                    {recurringInterval === SubscriptionRecurringInterval.Month ? "Monthly" : "Yearly"}
+                  </span>
+                )}
                 <FormControl>
                   <MoneyInput
                     name={field.name}
@@ -57,30 +79,18 @@ export const ProductPriceItem: React.FC<ProductPriceItemProps> = ({
                       setValue(`prices.${index}.id`, "");
                     }}
                     placeholder={0}
-                    postSlot={
-                      <>
-                        {recurringInterval ===
-                          SubscriptionRecurringInterval.Month && (
-                          <span className="text-sm">/month</span>
-                        )}
-                        {recurringInterval ===
-                          SubscriptionRecurringInterval.Year && (
-                          <span className="text-sm">/year</span>
-                        )}
-                      </>
-                    }
                   />
                 </FormControl>
+
                 {deletable && (
-                  <button
-                    className={
-                      "border-none bg-transparent text-[16px] opacity-50 transition-opacity hover:opacity-100 dark:bg-transparent"
-                    }
-                    type="button"
+                  <Button
+                    variant="ghost"
+                    className="rounded-full h-6 w-6"
+                    size="icon"
                     onClick={() => remove(index)}
                   >
                     <ClearOutlined fontSize="inherit" />
-                  </button>
+                  </Button>
                 )}
               </div>
               <FormMessage />
@@ -103,10 +113,7 @@ export const ProductPriceCustomItem: React.FC<ProductPriceCustomItemProps> = ({
 
   return (
     <div className="flex items-center gap-2">
-      <input
-        type="hidden"
-        {...register(`prices.${index}.recurringInterval`)}
-      />
+      <input type="hidden" {...register(`prices.${index}.recurringInterval`)} />
       <input type="hidden" {...register(`prices.${index}.id`)} />
       <input type="hidden" {...register(`prices.${index}.type`)} />
       <input type="hidden" {...register(`prices.${index}.amountType`)} />
@@ -177,10 +184,7 @@ export const ProductPriceFreeItem: React.FC<ProductPriceFreeItemProps> = ({
 
   return (
     <>
-      <input
-        type="hidden"
-        {...register(`prices.${index}.recurringInterval`)}
-      />
+      <input type="hidden" {...register(`prices.${index}.recurringInterval`)} />
       <input type="hidden" {...register(`prices.${index}.id`)} />
       <input type="hidden" {...register(`prices.${index}.type`)} />
       <input type="hidden" {...register(`prices.${index}.amountType`)} />
@@ -232,10 +236,12 @@ export const ProductPricingSection = ({
       : ProductPriceType.OneTime
   );
 
-  const [amountType, setAmountType] = useState<"fixed" | "custom" | "free">(() => {
-    const initialAmountType = (prices as ProductPrice[])[0]?.amountType;
-    return initialAmountType ?? "fixed";
-  });
+  const [amountType, setAmountType] = useState<"fixed" | "custom" | "free">(
+    () => {
+      const initialAmountType = (prices as ProductPrice[])[0]?.amountType;
+      return initialAmountType ?? "fixed";
+    }
+  );
 
   useEffect(() => {
     if (update) return;
@@ -297,7 +303,14 @@ export const ProductPricingSection = ({
 
   return (
     <div className="flex flex-col gap-6">
-      <div className="flex w-full flex-col gap-6">
+      <div className="flex flex-col gap-y-2">
+        <h2 className="text-sm font-semibold">Pricing</h2>
+        <p className="text-xs text-neutral-500">
+          Set a one-time price, recurring price or a “pay what you want” pricing
+          model
+        </p>
+      </div>
+      <div className="flex flex-col gap-6">
         {!update && (
           <Tabs
             value={pricingType}
@@ -305,13 +318,15 @@ export const ProductPricingSection = ({
               setPricingType(value as ProductPriceType)
             }
           >
-            <TabsList>
+            <TabsList className="w-full flex flex-row gap-x-1">
               <TabsTrigger
+                className="text-xs flex-1"
                 value={ProductPriceType.OneTime}
               >
                 Pay Once
               </TabsTrigger>
               <TabsTrigger
+                className="text-xs flex-1"
                 value={ProductPriceType.Recurring}
               >
                 Subscription
@@ -326,20 +341,21 @@ export const ProductPricingSection = ({
               setAmountType(value as "fixed" | "custom" | "free")
             }
           >
-            <SelectTrigger>
+            <SelectTrigger className="bg-neutral-900 text-xs    ">
               <SelectValue placeholder="Select a product" />
             </SelectTrigger>
             <SelectContent>
-              <SelectItem value="fixed">Fixed price</SelectItem>
+              <SelectItem value="fixed" className="text-xs">Fixed price</SelectItem>
               {pricingType === ProductPriceType.OneTime && (
-                <SelectItem value="custom">Pay what you want</SelectItem>
+                <SelectItem value="custom" className="text-xs">Pay what you want</SelectItem>
               )}
-              <SelectItem value="free">Free</SelectItem>
+              <SelectItem value="free" className="text-xs">Free</SelectItem>
             </SelectContent>
           </Select>
         )}
-        {prices.map((price, index) => (
-          <>
+        <div className="flex flex-col gap-2">
+          {prices.map((price, index) => (
+            <>
             {amountType === "fixed" && (
               <ProductPriceItem
                 key={price.id}
@@ -353,9 +369,10 @@ export const ProductPricingSection = ({
             )}
             {amountType === "free" && (
               <ProductPriceFreeItem key={price.id} index={index} />
-            )}
-          </>
-        ))}
+              )}
+            </>
+          ))}
+        </div>
         {amountType !== "free" &&
           pricingType === ProductPriceType.Recurring && (
             <div className="flex flex-row gap-2">

@@ -1,6 +1,5 @@
 import React from "react";
 import { ProductInfoSection } from "./ProductInfoSection";
-import { ProductMediaSection } from "./ProductMediaSection";
 import { ProductPricingSection } from "./ProductPricingSection";
 import { Organization, ProductCreate, ProductUpdate } from "@polar-sh/sdk/models/components";
 import { ProductMediaFileRead } from "@polar-sh/sdk/models/components";
@@ -17,11 +16,14 @@ interface ProductFormProps {
 }
 
 const ProductForm: React.FC<ProductFormProps> = ({ update }) => {
+
+  
+
   return (
-    <div className="dark:divide-polar-700 flex flex-col divide-y">
+    <div className="flex flex-col gap-y-6">
       <ProductInfoSection />
       <ProductPricingSection update={update} />
-      <ProductMediaSection />
+      {/* <ProductMediaSection /> */}
     </div>
   );
 };

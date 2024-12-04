@@ -1,3 +1,6 @@
+import LogoIcon from "@/components/LogoIcon";
+import { Button } from "@/components/ui/button";
+import { KeyboardArrowRight } from "@mui/icons-material";
 import { useEffect, useRef } from "react";
 
 const isLocal = () => false; //window.location.hostname.includes("localhost");
@@ -39,7 +42,7 @@ export const Login = ({ onSuccess }: LoginProps) => {
       pollInterval.current = setInterval(async () => {
         const response = await fetch(
           `${AUTH_BACKEND}/poll?readKey=${readKey}`,
-          { method: "POST" },
+          { method: "POST" }
         );
 
         if (response.status === 200) {
@@ -77,8 +80,15 @@ export const Login = ({ onSuccess }: LoginProps) => {
   };
 
   return (
-      <button className="framer-button-primary" onClick={login}>
-        Login
-      </button>
+    <div className="flex h-full flex-col items-center justify-center gap-8 p-4 w-full">
+      <LogoIcon size={50} />
+      <h1 className="text-lg font-medium text-center text-pretty px-4">
+        Digital Products & Payments <span className="text-neutral-500">made easy</span>
+      </h1>
+        <Button className="w-fit px-6 rounded-full" onClick={login}>
+          <span>Get Started</span>
+          <KeyboardArrowRight className="w-6 h-6" />
+        </Button>
+    </div>
   );
 };

@@ -7,10 +7,10 @@ import { Organization } from "@polar-sh/sdk/models/components";
 
 export const useProducts = ({organizationId, ...params}: ProductsListRequest) => {
   const polar = useContext(PolarAPIContext);
-
+  
   return useQuery({
     queryKey: ["products", organizationId, params],
-    queryFn: () => polar.products.list(params),
+    queryFn: () => polar.products.list({ organizationId, ...params }),
     enabled: !!organizationId,
   });
 };

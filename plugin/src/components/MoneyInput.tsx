@@ -1,5 +1,4 @@
 import { ChangeEvent, FocusEvent, useCallback, useState } from "react";
-import { Input } from "./ui/input";
 
 interface MoneyInputProps {
   name: string;
@@ -29,8 +28,6 @@ const MoneyInput = ({
   name,
   value,
   placeholder,
-  preSlot,
-  postSlot,
   onChange: _onChange,
   onBlur,
   onFocus,
@@ -59,9 +56,9 @@ const MoneyInput = ({
   };
 
   return (
-    <div className="flex flex-row gap-x-2 items-center">
-      {preSlot && <div>{preSlot}</div>}
-      <Input
+    <div className="flex flex-row flex-grow gap-x-2 items-center">
+      <input
+        className="flex-grow placeholder:text-neutral-600   "
         type="number"
         step={0.1}
         id={id}
@@ -69,7 +66,7 @@ const MoneyInput = ({
         value={internalValue}
         onChange={onChange}
         onInput={onInput}
-        placeholder={placeholder ? `${placeholder / 100}` : undefined}
+        placeholder={placeholder ? `$${placeholder / 100}` : '$0'}
         onBlur={onBlur}
         onFocus={onFocus}
         onWheel={(e) => {
@@ -77,7 +74,7 @@ const MoneyInput = ({
         }}
         disabled={disabled}
       />
-      {postSlot && <div>{postSlot}</div>}
+      <span className="text-neutral-500">USD</span>
     </div>
   );
 };

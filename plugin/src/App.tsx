@@ -1,7 +1,7 @@
 import { framer } from "framer-plugin";
 import "./App.css";
-import { Login, Tokens } from "./components/Login";
-import { useCallback, useEffect, useState } from "react";
+import { Login, Tokens } from "./containers/Login";
+import { useCallback, useState } from "react";
 import { PolarProviders } from "./providers";
 import { buildAPIClient } from "./api/polar";
 import { ProductsView } from "./containers/ProductsView";
