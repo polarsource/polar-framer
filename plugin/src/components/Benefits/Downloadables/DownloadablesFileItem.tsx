@@ -1,5 +1,5 @@
-import { useSortable } from '@dnd-kit/sortable'
-import { CSS } from '@dnd-kit/utilities'
+import { useSortable } from "@dnd-kit/sortable";
+import { CSS } from "@dnd-kit/utilities";
 import {
   AudioFileOutlined,
   DescriptionOutlined,
@@ -8,57 +8,30 @@ import {
   InsertDriveFileOutlined,
   MoreVertOutlined,
   VideoFileOutlined,
-} from '@mui/icons-material'
-import { FileRead } from '@polar-sh/sdk/models/components'
-import { Switch } from '@/components/ui/switch'
+} from "@mui/icons-material";
+import { FileRead } from "@polar-sh/sdk/models/components";
+import { Switch } from "@/components/ui/switch";
 import {
   FocusEvent,
   FormEventHandler,
   useCallback,
   useRef,
   useState,
-} from 'react'
-import { twMerge } from 'tailwind-merge'
-import { usePatchFile, useDeleteFile } from '@/hooks/files'
-import { FileObject } from '@/components/Files/FileUpload'
-import { Button } from '@/components/ui/button'
+} from "react";
+import { twMerge } from "tailwind-merge";
+import { usePatchFile, useDeleteFile } from "@/hooks/files";
+import { FileObject } from "@/components/Files/FileUpload";
+import { Button } from "@/components/ui/button";
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuTrigger,
-} from '@/components/ui/dropdown-menu'
-import { useMemo } from 'react'
-
-export const FilePreview = ({ mimeType }: { mimeType: string }) => {
-  const icon = useMemo(() => {
-    const size: 'small' | 'large' | 'inherit' | 'medium' = 'small'
-
-    switch (true) {
-      case /image\/(.*)/.test(mimeType):
-        return <ImageOutlined fontSize={size} />
-      case /video\/(.*)/.test(mimeType):
-        return <VideoFileOutlined fontSize={size} />
-      case /audio\/(.*)/.test(mimeType):
-        return <AudioFileOutlined fontSize={size} />
-      case /application\/zip/.test(mimeType):
-        return <FolderZipOutlined fontSize={size} />
-      case /application\/pdf/.test(mimeType):
-        return <DescriptionOutlined fontSize={size} />
-      default:
-        return <InsertDriveFileOutlined fontSize={size} />
-    }
-  }, [mimeType])
-
-  return (
-    <div className="bg-neutral-600 flex h-10 w-10 flex-shrink-0 flex-col items-center justify-center rounded-full bg-blue-50 text-blue-500 text-white">
-      {icon}
-    </div>
-  )
-}
+} from "@/components/ui/dropdown-menu";
+import { useMemo } from "react";
 
 const FileUploadProgress = ({ file }: { file: FileObject }) => {
-  const pct = Math.round((file.uploadedBytes / file.size) * 100)
+  const pct = Math.round((file.uploadedBytes / file.size) * 100);
   return (
     <>
       <div className="flex w-full items-center space-x-4">
@@ -77,8 +50,8 @@ const FileUploadProgress = ({ file }: { file: FileObject }) => {
         </div>
       </div>
     </>
-  )
-}
+  );
+};
 
 const FilenameEditor = ({
   name,
@@ -86,76 +59,77 @@ const FilenameEditor = ({
   enabled,
   onUpdate,
 }: {
-  name: string
-  className?: string
-  enabled: boolean
-  onUpdate: (updated: string) => void
+  name: string;
+  className?: string;
+  enabled: boolean;
+  onUpdate: (updated: string) => void;
 }) => {
-  const paragraphRef = useRef<HTMLParagraphElement>(null)
+  const paragraphRef = useRef<HTMLParagraphElement>(null);
 
-  const [isDirty, setIsDirty] = useState(false)
+  const [isDirty, setIsDirty] = useState(false);
 
   // Mimic macOS behavior when editing a filename.
   // Highlighting everything except extension.
   const selectNameBeforeExtension = (e: FocusEvent<HTMLParagraphElement>) => {
-    const range = document.createRange()
-    const textNode = e.target.firstChild
-    if (!textNode) return
+    const range = document.createRange();
+    const textNode = e.target.firstChild;
+    if (!textNode) return;
 
-    const text = e.target.innerText
-    range.setStart(textNode, 0)
+    const text = e.target.innerText;
+    range.setStart(textNode, 0);
 
-    const extensionIndex = text.lastIndexOf('.')
-    const ending = extensionIndex > 0 ? extensionIndex : text.length
-    range.setEnd(textNode, ending)
+    const extensionIndex = text.lastIndexOf(".");
+    const ending = extensionIndex > 0 ? extensionIndex : text.length;
+    range.setEnd(textNode, ending);
 
-    const sel = window.getSelection()
+    const sel = window.getSelection();
     if (sel) {
-      sel.removeAllRanges()
-      sel.addRange(range)
+      sel.removeAllRanges();
+      sel.addRange(range);
     }
-  }
+  };
 
   const update = useCallback(
     (updated: string) => {
       if (isDirty) {
-        onUpdate(updated)
+        onUpdate(updated);
       }
     },
-    [onUpdate, isDirty],
-  )
+    [onUpdate, isDirty]
+  );
 
   const onBlur: FormEventHandler<HTMLParagraphElement> = useCallback(
     (e) => {
-      if (!paragraphRef.current) return
-      setIsDirty(false)
-      const updated = (e.target as HTMLParagraphElement).innerText ?? ''
-      update(updated)
+      if (!paragraphRef.current) return;
+      setIsDirty(false);
+      const updated = (e.target as HTMLParagraphElement).innerText ?? "";
+      update(updated);
     },
-    [update],
-  )
+    [update]
+  );
 
   const onEditableChanged: FormEventHandler<HTMLParagraphElement> = () => {
-    if (!paragraphRef.current) return
-    setIsDirty(true)
-  }
+    if (!paragraphRef.current) return;
+    setIsDirty(true);
+  };
 
   return (
     <>
-      <div className={twMerge('flex flex-row', className)}>
+      <div className={twMerge("flex flex-row", className)}>
         <p
           ref={paragraphRef}
+          className="text-xs"
           suppressContentEditableWarning
           contentEditable={enabled}
           onFocus={(e) => {
-            selectNameBeforeExtension(e)
+            selectNameBeforeExtension(e);
           }}
           onBlur={onBlur}
           onKeyDown={(e) => {
-            onEditableChanged(e)
-            if (e.key === 'Enter') {
-              e.preventDefault()
-              e.currentTarget.blur()
+            onEditableChanged(e);
+            if (e.key === "Enter") {
+              e.preventDefault();
+              e.currentTarget.blur();
             }
           }}
         >
@@ -163,16 +137,12 @@ const FilenameEditor = ({
         </p>
       </div>
     </>
-  )
-}
+  );
+};
 
 const FileUploadDetails = ({ file }: { file: FileObject }) => {
-  return (
-    <div className="text-neutral-500">
-      <p className="text-xs">{file.sizeReadable}</p>
-    </div>
-  )
-}
+  return <p className="text-xs text-neutral-500">{file.sizeReadable}</p>;
+};
 
 export const FileListItem = ({
   file,
@@ -182,12 +152,12 @@ export const FileListItem = ({
   setArchivedFile,
   sortable,
 }: {
-  file: FileObject
-  updateFile: (callback: (prev: FileObject) => FileObject) => void
-  removeFile: () => void
-  archivedFiles: { [key: string]: boolean }
-  setArchivedFile: (fileId: string, disabled: boolean) => void
-  sortable?: ReturnType<typeof useSortable>
+  file: FileObject;
+  updateFile: (callback: (prev: FileObject) => FileObject) => void;
+  removeFile: () => void;
+  archivedFiles: { [key: string]: boolean };
+  setArchivedFile: (fileId: string, disabled: boolean) => void;
+  sortable?: ReturnType<typeof useSortable>;
 }) => {
   // Re-introduce later for editing files, e.g version and perhaps even name?
   const patchFileQuery = usePatchFile(file.id, (response: FileRead) => {
@@ -195,55 +165,55 @@ export const FileListItem = ({
       return {
         ...prev,
         ...response,
-      }
-    })
-  })
+      };
+    });
+  });
 
   const patchFile = useCallback(
     async (attrs: { name?: string; version?: string }) => {
-      await patchFileQuery.mutateAsync(attrs)
+      await patchFileQuery.mutateAsync(attrs);
     },
-    [patchFileQuery],
-  )
+    [patchFileQuery]
+  );
 
   const deleteFile = useDeleteFile(file.id, () => {
-    removeFile()
-  })
+    removeFile();
+  });
 
   const onToggleEnabled = useCallback(
     (enabled: boolean) => {
-      setArchivedFile(file.id, !enabled)
+      setArchivedFile(file.id, !enabled);
     },
-    [file, setArchivedFile],
-  )
+    [file, setArchivedFile]
+  );
 
   const onDelete = useCallback(async () => {
-    deleteFile.mutateAsync()
-  }, [deleteFile])
+    deleteFile.mutateAsync();
+  }, [deleteFile]);
 
   const onCopySHA = useCallback(() => {
-    navigator.clipboard.writeText(file.checksumSha256Hex ?? '')
-  }, [file])
+    navigator.clipboard.writeText(file.checksumSha256Hex ?? "");
+  }, [file]);
 
-  const isUploading = useMemo(() => file.isUploading, [file])
+  const isUploading = useMemo(() => file.isUploading, [file]);
 
   const isEnabled = useMemo(() => {
-    return archivedFiles ? !archivedFiles[file.id] : true
-  }, [archivedFiles, file])
+    return archivedFiles ? !archivedFiles[file.id] : true;
+  }, [archivedFiles, file]);
 
   const update = useCallback(
     (attrs: { name?: string; version?: string }) => {
-      patchFile(attrs)
+      patchFile(attrs);
     },
-    [patchFile],
-  )
+    [patchFile]
+  );
 
   return (
     <div
       ref={sortable ? sortable.setNodeRef : undefined}
       className={twMerge(
-        'hover:bg-neutral-700 text-neutral-500 flex flex-row items-center justify-between gap-x-8 gap-y-2 rounded-xl px-4 py-2 transition-colors',
-        sortable?.isDragging && 'opacity-30',
+        "hover:bg-neutral-800 bg-neutral-900 text-neutral-500 flex flex-row items-center justify-between gap-x-8 gap-y-2 rounded-xl px-3 py-2 transition-colors",
+        sortable?.isDragging && "opacity-30"
       )}
       style={
         sortable
@@ -255,14 +225,6 @@ export const FileListItem = ({
       }
     >
       <div className="flex w-full min-w-0 flex-row items-center gap-x-4">
-        <div
-          className="cursor-grab"
-          ref={sortable ? sortable.setDraggableNodeRef : undefined}
-          {...sortable?.attributes}
-          {...sortable?.listeners}
-        >
-          <FilePreview mimeType={file.mimeType} />
-        </div>
         <div className="flex w-full min-w-0 flex-grow flex-col gap-y-1 text-white">
           <FilenameEditor
             name={file.name}
@@ -276,12 +238,16 @@ export const FileListItem = ({
       </div>
       {!isUploading && (
         <div className="flex w-fit flex-row items-center gap-x-2">
-          <Switch checked={isEnabled} onCheckedChange={onToggleEnabled} />
+          <Switch
+            className="p-0.5 h-4 w-8 [&>span]:h-3 [&>span]:w-3"
+            checked={isEnabled}
+            onCheckedChange={onToggleEnabled}
+          />
           <DropdownMenu>
-            <DropdownMenuTrigger className="focus:outline-none" asChild>
+            <DropdownMenuTrigger className="focus:outline-none w-6 h-6" asChild>
               <Button
                 className={
-                  'border-none bg-transparent text-[16px] opacity-50 transition-opacity hover:opacity-100 bg-transparent'
+                  "border-none text-[16px] opacity-50 transition-opacity hover:opacity-100 bg-transparent"
                 }
                 size="icon"
                 variant="secondary"
@@ -305,9 +271,9 @@ export const FileListItem = ({
           </DropdownMenu>
         </div>
       )}
-   </div>
-  )
-}
+    </div>
+  );
+};
 
 export const DraggableFileListItem = ({
   file,
@@ -316,13 +282,13 @@ export const DraggableFileListItem = ({
   archivedFiles,
   setArchivedFile,
 }: {
-  file: FileObject
-  updateFile: (callback: (prev: FileObject) => FileObject) => void
-  removeFile: () => void
-  archivedFiles: { [key: string]: boolean }
-  setArchivedFile: (fileId: string, disabled: boolean) => void
+  file: FileObject;
+  updateFile: (callback: (prev: FileObject) => FileObject) => void;
+  removeFile: () => void;
+  archivedFiles: { [key: string]: boolean };
+  setArchivedFile: (fileId: string, disabled: boolean) => void;
 }) => {
-  const sortable = useSortable({ id: file.id })
+  const sortable = useSortable({ id: file.id });
 
   return (
     <FileListItem
@@ -333,5 +299,5 @@ export const DraggableFileListItem = ({
       setArchivedFile={setArchivedFile}
       sortable={sortable}
     />
-  )
-}
+  );
+};

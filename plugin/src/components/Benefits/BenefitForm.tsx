@@ -76,13 +76,13 @@ export const BenefitForm = ({
           return (
             <FormItem>
               <div className="flex flex-row items-center justify-between">
-                <FormLabel>Description</FormLabel>
-                <span className="text-neutral-400 text-sm">
+                <FormLabel className='text-xs'>Name</FormLabel>
+                <span className="text-neutral-400 text-xs">
                   {field.value?.length ?? 0} / 42
                 </span>
               </div>
               <FormControl>
-                <Input {...field} />
+                <input className='bg-neutral-800 text-xs p-2 w-full' {...field} />
               </FormControl>
               <FormMessage />
             </FormItem>
@@ -90,7 +90,6 @@ export const BenefitForm = ({
         }}
       />
 
-      {!update ? <BenefitTypeSelect /> : null}
       {type === 'custom' && <CustomBenefitForm update={update} />}
       {type === 'downloadables' && (
         <DownloadablesBenefitForm organization={organization} update={update} />
@@ -118,10 +117,11 @@ export const CustomBenefitForm = ({
           return (
             <FormItem>
               <div className="flex flex-row items-center justify-between">
-                <FormLabel>Private note</FormLabel>
+                <FormLabel className='text-xs'>Private note</FormLabel>
               </div>
               <FormControl>
                 <textarea
+                  className='bg-neutral-800 placeholder:text-neutral-500 text-xs p-2 w-full min-h-24'
                   {...field}
                   value={field.value || ''}
                   placeholder="Write a secret note here. Like your private email address for premium support, Cal.com link to book consultation, etc."
@@ -138,15 +138,16 @@ export const CustomBenefitForm = ({
           name="isTaxApplicable"
           render={({ field }) => {
             return (
-              <FormItem className="flex flex-row items-center space-x-3 space-y-0">
+              <FormItem className="flex flex-row items-center space-x-2 space-y-0">
                 <FormControl>
                   <input
                     type="checkbox"
+                    className='h-8 w-8'
                     defaultChecked={field.value}
                     onChange={field.onChange}
                   />
                 </FormControl>
-                <FormLabel className="text-sm leading-none">
+                <FormLabel className="text-xs leading-none">
                   Tax Applicable
                 </FormLabel>
               </FormItem>
@@ -174,7 +175,7 @@ const BenefitTypeSelect = () => {
             <FormControl>
               <Select onValueChange={field.onChange} defaultValue={field.value}>
                 <SelectTrigger>
-                  <SelectValue placeholder="Select a benefit type" />
+                  <SelectValue placeholder="Select Benefit Type" />
                 </SelectTrigger>
                 <SelectContent>
                   {Object.values(BenefitType)

@@ -5,7 +5,8 @@ import { Link, Outlet, useNavigate } from "react-router";
 import { OrganizationContext } from "../providers";
 import { Organization } from "@polar-sh/sdk/models/components";
 import { Button } from "@/components/ui/button";
-import { AddOutlined } from "@mui/icons-material";
+import { AddOutlined, ArrowOutwardOutlined } from "@mui/icons-material";
+import { baseUrl } from "@/utils";
 
 export const OrganizationLayout = () => {
   const { organization, setOrganization } = useContext(OrganizationContext);
@@ -25,8 +26,8 @@ export const OrganizationLayout = () => {
   }, [organizations, organization, setOrganization]);
 
   return (
-    <div className="flex w-full h-full flex-col">
-      <div className="flex p-4 w-full flex-row items-center gap-x-4 border-b border-white/5">
+    <div className="flex w-full flex-grow min-h-0 h-full flex-col">
+      <div className="flex p-4 w-full flex-row items-center gap-x-2 border-b border-white/5">
         <Link to="/products">
           <Avatar url={organization?.avatarUrl ?? ""} name={organization?.name ?? ""} />
         </Link>
@@ -41,9 +42,16 @@ export const OrganizationLayout = () => {
             </option>
           ))}
         </select>
+        <div className="flex flex-row items-center">
+        <a href={`${baseUrl}/dashboard/${organization?.slug}`} target="_blank">
+          <Button size="icon" className="text-white rounded-full h-7 w-7" variant="ghost">
+            <ArrowOutwardOutlined fontSize="small" />
+          </Button>
+        </a>
         <Button size="icon" className="text-white rounded-full h-7 w-7" variant="ghost" onClick={() => navigate("/onboarding")}>
           <AddOutlined fontSize="small" />
         </Button>
+        </div>
       </div>
       <Outlet />
     </div>

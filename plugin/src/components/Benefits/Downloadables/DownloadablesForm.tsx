@@ -12,41 +12,39 @@ import { twMerge } from 'tailwind-merge'
 import { FileList } from './DownloadablesFilesList'
 import { FileObject, useFileUpload } from '@/components/Files/FileUpload'
 
+
+
+
 const DropzoneView = ({
   isDragActive,
   children,
 }: {
-  isDragActive: boolean
-  children: ReactElement
+  isDragActive: boolean;
+  children: ReactElement;
 }) => {
   return (
     <>
       <div
         className={twMerge(
-          'rounded-4xl flex w-full cursor-pointer items-center justify-center border border-transparent pb-8 pt-8',
-          isDragActive
-            ? 'border-neutral-700 bg-neutral-950 border-blue-100 bg-blue-50'
-            : 'bg-neutral-700',
+          "flex aspect-video w-full cursor-pointer items-center justify-center rounded-2xl bg-neutral-900 px-4"
         )}
       >
-        <div className="text-neutral-500 text-center">
-          <div className="mb-4">
-            <FileUploadIcon fontSize="large" />
-          </div>
-          <h3 className="font-medium">
-            {!isDragActive && 'Feed me some bytes'}
-            {isDragActive && "Drop it like it's hot"}
-          </h3>
-          <p className="mt-2 text-sm">
-            You can drop files here or{' '}
+        <div className="text-neutral-500 text-center flex flex-col gap-y-3 items-center">
+          <FileUploadIcon fontSize="medium" />
+          <p className="text-neutral-200 text-xs font-medium ">
+            {isDragActive ? "Drop it like it's hot" : "Feed me some bytes"}
+          </p>
+          <p className="text-xs text-neutral-500">
+            You can drop files here or{" "}
             <a className="text-blue-400">click like a Netscape user</a>
           </p>
         </div>
         {children}
       </div>
     </>
-  )
-}
+  );
+};
+
 
 const DownloadablesForm = ({
   organization,

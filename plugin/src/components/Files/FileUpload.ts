@@ -1,5 +1,3 @@
-'use client'
-
 import { useContext, useState } from 'react'
 import { Accept, FileRejection, useDropzone } from 'react-dropzone'
 import { FileRead, FileServiceTypes, FileUpload, Organization } from '@polar-sh/sdk/models/components'

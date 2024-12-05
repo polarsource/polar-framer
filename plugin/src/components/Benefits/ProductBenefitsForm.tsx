@@ -56,7 +56,7 @@ const BenefitRow = ({
     <div
       className={twMerge("flex w-full flex-row items-center justify-between")}
     >
-      <div className="flex flex-row items-center gap-x-3">
+      <div className="flex flex-row items-center gap-x-2">
         <span
           className={twMerge(
             "flex h-5 w-5 shrink-0 flex-row items-center justify-center rounded-full text-sm",
@@ -210,7 +210,6 @@ const BenefitsContainer = ({
   
   const handleToggleNewBenefit = (type: BenefitType) => {
     setCreateBenefitSection(type);
-    setOpen(false);
   }
 
   const form = useForm<BenefitCreate>({
@@ -251,14 +250,17 @@ const BenefitsContainer = ({
     <div className="flex flex-col gap-1">
       <div
         className={twMerge(
-          "hover:border-neutral-800 group flex cursor-pointer flex-row items-center justify-between gap-2 rounded-xl border px-3 py-2 text-sm transition-colors border-transparent",
+          "hover:border-neutral-800 group select-none flex cursor-pointer flex-row items-center justify-between gap-2 rounded-lg border px-3 py-2 text-sm transition-colors border-transparent",
           open ? "bg-neutral-800" : "bg-neutral-900"
         )}
-        onClick={() => setOpen((v) => !v)}
+        onClick={() => {
+          setOpen((v) => !v)
+          setCreateBenefitSection(undefined)
+        }}
         role="button"
       >
         <div className="flex flex-row items-center gap-x-3">
-          {resolveBenefitCategoryIcon(type, "small", "h-5 w-5")}
+          {resolveBenefitCategoryIcon(type, "inherit", "h-4 w-4")}
           <span className="text-xs">{title}</span>
         </div>
         <span className="flex flex-row items-center gap-x-3">
@@ -276,7 +278,7 @@ const BenefitsContainer = ({
         </span>
       </div>
       {open && !createBenefitSection ? (
-        <div className="border-neutral-800 mb-2 flex flex-col gap-y-4 rounded-xl border p-2">
+        <div className="border-neutral-800 mb-2 flex flex-col gap-y-4 rounded-lg border p-2 pt-3">
           {benefits.length > 0 ? (
             <div className="flex flex-col gap-y-1">
               {benefits.map((benefit) => {
@@ -310,10 +312,10 @@ const BenefitsContainer = ({
           </Button>
         </div>
       ) : null}
-      {createBenefitSection ? (
-        <div className="flex flex-col gap-y-4 border-neutral-800 mb-2 rounded-xl border p-2">
+      {open && createBenefitSection ? (
+        <div className="flex flex-col gap-y-4 border-neutral-800 rounded-xl border p-4">
           <Form {...form}>
-            <form className="flex flex-col gap-y-6"> 
+            <form className="flex flex-col gap-y-4"> 
               <BenefitForm organization={organization} type={createBenefitSection} />
             </form>
           </Form>
@@ -331,7 +333,6 @@ const BenefitsContainer = ({
                 size="sm"
                 onClick={() => {
                   setCreateBenefitSection(undefined)
-                  setOpen(true)
                 }}
               >
                 Cancel

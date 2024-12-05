@@ -1,19 +1,11 @@
-'use client'
+"use client";
 
 import {
   BenefitLicenseKeyActivationProperties,
   BenefitLicenseKeyExpirationProperties,
   BenefitLicenseKeysCreate,
-} from '@polar-sh/sdk/models/components'
-import { Switch } from '@/components/ui/switch'
-import { Input } from '@/components/ui/input'
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from '@/components/ui/select'
+} from "@polar-sh/sdk/models/components";
+import { Switch } from "@/components/ui/switch";
 import {
   FormControl,
   FormDescription,
@@ -21,30 +13,30 @@ import {
   FormItem,
   FormLabel,
   FormMessage,
-} from '@/components/ui/form'
-import { useState } from 'react'
-import { useFormContext } from 'react-hook-form'
+} from "@/components/ui/form";
+import { useState } from "react";
+import { useFormContext } from "react-hook-form";
 
 export const LicenseKeysBenefitForm = () => {
   const { control, watch, setValue } =
-    useFormContext<BenefitLicenseKeysCreate>()
+    useFormContext<BenefitLicenseKeysCreate>();
 
-  const expires = watch('properties.expires', undefined)
-  const showExpirationFields = !!expires
+  const expires = watch("properties.expires", undefined);
+  const showExpirationFields = !!expires;
   const defaultExpiration: BenefitLicenseKeyExpirationProperties = {
     ttl: 1,
-    timeframe: 'year',
-  }
+    timeframe: "year",
+  };
 
-  const activations = watch('properties.activations', undefined)
-  const showActivationFields = !!activations
+  const activations = watch("properties.activations", undefined);
+  const showActivationFields = !!activations;
   const defaultActivations: BenefitLicenseKeyActivationProperties = {
     limit: 5,
     enableUserAdmin: true,
-  }
+  };
 
-  const limitUsage = watch('properties.limitUsage', undefined)
-  const [showLimitUsage, setShowLimitUsage] = useState(!!limitUsage)
+  const limitUsage = watch("properties.limitUsage", undefined);
+  const [showLimitUsage, setShowLimitUsage] = useState(!!limitUsage);
 
   return (
     <>
@@ -52,21 +44,25 @@ export const LicenseKeysBenefitForm = () => {
         control={control}
         name="properties.prefix"
         render={({ field }) => {
-          const value = field.value || ''
+          const value = field.value || "";
           return (
-            <FormItem className="flex flex-col gap-y-2">
-              <div className="flex flex-col gap-y-2">
-                <FormLabel>Key prefix</FormLabel>
-                <FormDescription>
+            <FormItem className="flex flex-col">
+              <div className="flex flex-col gap-y-1">
+                <FormLabel className="text-xs">Key prefix</FormLabel>
+                <FormDescription className="text-xs">
                   A prefix to identify license keys
                 </FormDescription>
               </div>
               <FormControl>
-                <Input type="text" {...{ ...field, value }} />
+                <input
+                  className="bg-neutral-800 placeholder:text-neutral-500 text-xs p-2 w-full"
+                  type="text"
+                  {...{ ...field, value }}
+                />
               </FormControl>
               <FormMessage />
             </FormItem>
-          )
+          );
         }}
       />
 
@@ -82,20 +78,21 @@ export const LicenseKeysBenefitForm = () => {
               <FormItem>
                 <Switch
                   id="license-key-ttl"
+                  className="p-0.5 h-4 w-8 [&>span]:h-3 [&>span]:w-3"
                   checked={showExpirationFields}
                   onCheckedChange={(enabled) => {
-                    const value = enabled ? defaultExpiration : undefined
-                    setValue('properties.expires', value)
+                    const value = enabled ? defaultExpiration : undefined;
+                    setValue("properties.expires", value);
                   }}
                 />
                 <FormMessage />
               </FormItem>
-            )
+            );
           }}
         />
       </div>
       {expires && (
-        <div className="flex flex-row space-x-4">
+        <div className="flex flex-row gap-x-2">
           <FormField
             control={control}
             name="properties.expires.ttl"
@@ -103,11 +100,15 @@ export const LicenseKeysBenefitForm = () => {
               return (
                 <FormItem>
                   <FormControl>
-                    <Input {...field} />
+                    <input
+                      className="bg-neutral-800 placeholder:text-neutral-500 text-xs p-2 w-full"
+                      type="number"
+                      {...field}
+                    />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
-              )
+              );
             }}
           />
           <FormField
@@ -118,23 +119,22 @@ export const LicenseKeysBenefitForm = () => {
               return (
                 <FormItem>
                   <FormControl>
-                    <Select
-                      onValueChange={field.onChange}
-                      defaultValue={field.value}
+                    <select
+                      className="bg-neutral-800 text-xs px-3 w-full"
+                      value={field.value}
+                      onChange={(e) => field.onChange(e.target.value)}
                     >
-                      <SelectTrigger>
-                        <SelectValue placeholder="Select timeframe" />
-                      </SelectTrigger>
-                      <SelectContent>
-                        <SelectItem value="day">Day</SelectItem>
-                        <SelectItem value="month">Month</SelectItem>
-                        <SelectItem value="year">Year</SelectItem>
-                      </SelectContent>
-                    </Select>
+                      <option value="" disabled>
+                        Timeframe
+                      </option>
+                      <option value="day">Day</option>
+                      <option value="month">Month</option>
+                      <option value="year">Year</option>
+                    </select>
                   </FormControl>
                   <FormMessage />
                 </FormItem>
-              )
+              );
             }}
           />
         </div>
@@ -146,10 +146,11 @@ export const LicenseKeysBenefitForm = () => {
         </div>
         <Switch
           id="license-key-activations"
+          className="p-0.5 h-4 w-8 [&>span]:h-3 [&>span]:w-3"
           checked={showActivationFields}
           onCheckedChange={(enabled) => {
-            const value = enabled ? defaultActivations : undefined
-            setValue('properties.activations', value)
+            const value = enabled ? defaultActivations : undefined;
+            setValue("properties.activations", value);
           }}
         />
       </div>
@@ -162,11 +163,15 @@ export const LicenseKeysBenefitForm = () => {
               return (
                 <FormItem>
                   <FormControl>
-                    <Input {...field} />
+                    <input
+                      className="bg-neutral-800 placeholder:text-neutral-500 text-xs p-2 w-full"
+                      type="number"
+                      {...field}
+                    />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
-              )
+              );
             }}
           />
 
@@ -183,21 +188,21 @@ export const LicenseKeysBenefitForm = () => {
                       checked={field.value}
                       onChange={(e) => {
                         // String | boolean type for some reason
-                        const value = e.target.checked ? true : false
+                        const value = e.target.checked ? true : false;
                         setValue(
-                          'properties.activations.enableUserAdmin',
-                          value,
-                        )
+                          "properties.activations.enableUserAdmin",
+                          value
+                        );
                       }}
                     />
                     <FormMessage />
                   </FormItem>
-                )
+                );
               }}
             />
             <label
               htmlFor="license-key-activations-user-admin"
-              className="-mt-2 text-sm"
+              className="text-xs"
             >
               Enable user to deactivate instances via Polar
             </label>
@@ -211,11 +216,12 @@ export const LicenseKeysBenefitForm = () => {
         </div>
         <Switch
           id="license-key-limit-usage"
+          className="p-0.5 h-4 w-8 [&>span]:h-3 [&>span]:w-3"
           checked={showLimitUsage}
           onCheckedChange={(show) => {
-            const value = show ? 1 : undefined
-            setValue('properties.limitUsage', value)
-            setShowLimitUsage(show)
+            const value = show ? 1 : undefined;
+            setValue("properties.limitUsage", value);
+            setShowLimitUsage(show);
           }}
         />
       </div>
@@ -225,19 +231,23 @@ export const LicenseKeysBenefitForm = () => {
             control={control}
             name="properties.limitUsage"
             render={({ field }) => {
-              const value = field.value || ''
+              const value = field.value || "";
               return (
                 <FormItem>
                   <FormControl>
-                    <Input type="number" {...{ ...field, value }} />
+                    <input
+                      className="bg-neutral-800 placeholder:text-neutral-500 text-xs p-2 w-full"
+                      type="number"
+                      {...{ ...field, value }}
+                    />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
-              )
+              );
             }}
           />
         </>
       )}
     </>
-  )
-}
+  );
+};

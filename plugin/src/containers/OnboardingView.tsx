@@ -39,7 +39,7 @@ export const OnboardingView = () => {
   }, [name, slug, navigate, setOrganization, createOrganization]);
 
   return (
-    <div className="flex flex-col h-full p-4 w-full">
+    <div className="flex flex-col flex-grow p-4 w-full">
       <div className="flex flex-grow flex-col gap-y-6 justify-center items-center">
         <LogoIcon size={40} />
         <div className="flex flex-col gap-y-1 text-center items-center">

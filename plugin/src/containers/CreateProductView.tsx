@@ -109,7 +109,7 @@ export const CreateProductView = () => {
   }
 
   return (
-    <div className="flex flex-col gap-8 p-4 overflow-y-auto">
+    <div className="flex flex-col gap-8 p-4 overflow-y-auto min-h-0">
       <Form {...form}>
         <form
           onSubmit={handleSubmit(onSubmit)}

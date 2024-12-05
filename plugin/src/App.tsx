@@ -16,6 +16,7 @@ import { ProductView } from "./containers/ProductView";
 import { OrganizationLayout } from "./layouts/OrganizationLayout";
 import { CreateProductView } from "./containers/CreateProductView";
 import { OnboardingView } from "./containers/OnboardingView";
+import { Polar } from "@polar-sh/sdk";
 
 framer.showUI({
   position: "top right",
@@ -34,19 +35,27 @@ export function App() {
 }
 
 const PluginRoutes = () => {
-  const [tokens, setTokens] = useState<Tokens | null>(null);
+  const [apiClient, setApiClient] = useState<Polar>(new Polar());
   const navigate = useNavigate();
 
   const onLoginSuccess = useCallback(
     (tokens: Tokens) => {
-      setTokens(tokens);
-      navigate("/onboarding");
+      const apiClient = buildAPIClient(tokens.access_token);
+      setApiClient(apiClient);
+
+      apiClient.organizations.list({ limit: 1 }).then((organizations) => {
+        if (organizations.result.items.length === 0) {
+          navigate("/onboarding");
+        } else {
+          navigate("/products");
+        }
+      });
     },
     [navigate]
   );
 
   return (
-    <PolarProviders polar={buildAPIClient(tokens?.access_token ?? "")}>
+    <PolarProviders polar={apiClient}>
       <Routes>
         <Route index path="/" element={<LoginView onSuccess={onLoginSuccess} />} />
         <Route path="/onboarding" element={<OnboardingView />} />

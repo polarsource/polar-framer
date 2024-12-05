@@ -80,7 +80,7 @@ export const LoginView = ({ onSuccess }: LoginViewProps) => {
   };
 
   return (
-    <div className="flex h-full flex-col items-center justify-center gap-8 p-4 w-full">
+    <div className="flex flex-grow flex-col items-center justify-center gap-8 p-4 w-full">
       <LogoIcon size={50} />
       <h1 className="text-lg font-medium text-center text-pretty px-4">
         Digital Products & Payments <span className="text-neutral-500">made easy</span>

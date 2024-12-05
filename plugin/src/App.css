@@ -1,5 +1,10 @@
 /* Your Plugin CSS */
 
+body, html {
+    height: 460px;
+    overflow: hidden;
+}
+
 main {
     display: flex;
     flex-direction: column;
