@@ -1,10 +1,8 @@
 import { isLocal } from "@/utils";
 import { Polar } from "@polar-sh/sdk";
 
-
-
 export const buildAPIClient = (token: string) =>
   new Polar({
-    server: isLocal() ? 'sandbox' : 'production',
     accessToken: token,
+    serverURL: isLocal() ? "http://127.0.0.1:8000" : "https://api.polar.sh",
   });

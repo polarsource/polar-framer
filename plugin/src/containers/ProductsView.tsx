@@ -1,9 +1,11 @@
 import { useProducts } from "../hooks/products";
 import { Product } from "@polar-sh/sdk/models/components";
-import { AddOutlined } from "@mui/icons-material";
+import { AddOutlined, TextureOutlined } from "@mui/icons-material";
 import { Link, useNavigate } from "react-router";
 import { useContext } from "react";
 import { OrganizationContext } from "../providers";
+import { ProductPriceLabel } from "@/components/ProductPriceLabel";
+import { ProductPrices } from "@/components/ProductPrices";
 
 export const ProductsView = () => {
   const { organization } = useContext(OrganizationContext);
@@ -62,16 +64,27 @@ const ProductRow = ({ product }: { product: Product }) => {
   return (
     <Link
       to={`/products/${product.id}`}
-      className="flex flex-row gap-2 bg-neutral-900 hover:bg-neutral-800 p-4 py-3 rounded-xl transition-colors duration-75 cursor-pointer"
+      className="flex flex-row gap-2 bg-neutral-900 hover:bg-neutral-800 p-2 rounded-xl transition-colors duration-75 cursor-pointer"
     >
-      <div className="flex flex-row items-center gap-x-2">
+      <div className="flex w-full flex-row items-center gap-x-4">
+        {product.medias[0] ? (
+          <img src={product.medias[0].publicUrl} alt={`${product.name} media`} className="w-12 h-12 object-cover rounded-md" />
+        ) : (
+          <div className="w-12 h-12 flex flex-col items-center justify-center rounded-md bg-neutral-800">
+            <TextureOutlined className="text-neutral-700" />
+          </div>
+        )}
         <div className="flex flex-col gap-y-1">
-          <h3 className="text-sm font-medium">{product.name}</h3>
-          <p className="text-xs text-neutral-500">
-            {product.benefits.length === 1
-              ? "1 Benefit"
-              : `${product.benefits.length} Benefits`}
-          </p>
+          <h3 className="text-sm font-medium truncate line-clamp-1">{product.name}</h3>
+          <div className="flex text-xs text-neutral-500 flex-row items-center gap-x-2">
+            <ProductPrices prices={product.prices} />
+            <div className="text-xs" style={{ fontSize: '0.5rem' }}>•</div>
+            <span>
+              {product.benefits.length === 1
+                ? "1 Benefit"
+                : `${product.benefits.length} Benefits`}
+            </span>
+          </div>
         </div>
       </div>
     </Link>

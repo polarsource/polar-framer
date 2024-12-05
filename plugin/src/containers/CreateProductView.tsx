@@ -46,17 +46,17 @@ export const CreateProductView = () => {
         setLoading(true);
         const { full_medias, ...productCreateRest } = productCreate;
 
-        await createProduct.mutateAsync({
+        const product = await createProduct.mutateAsync({
           ...productCreateRest,
           medias: full_medias.map((media) => media.id),
         });
 
-        navigate(`/${organization?.slug}/products`);
+        navigate(`/products/${product.id}`);
       } finally {
         setLoading(false);
       }
     },
-    [organization, navigate, createProduct]
+    [navigate, createProduct]
   );
 
   if (!organization) {
