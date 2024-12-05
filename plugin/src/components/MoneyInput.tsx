@@ -58,7 +58,7 @@ const MoneyInput = ({
   return (
     <div className="flex flex-row flex-grow gap-x-2 items-center">
       <input
-        className="flex-grow placeholder:text-neutral-600   "
+        className="flex-grow placeholder:text-neutral-500   "
         type="number"
         step={0.1}
         id={id}

@@ -1,14 +1,8 @@
 import LogoIcon from "@/components/LogoIcon";
 import { Button } from "@/components/ui/button";
-import { isLocal } from "@/utils";
 import { KeyboardArrowRight } from "@mui/icons-material";
 import { useEffect, useRef } from "react";
-
-
-// Set a global variable with the endpoint.
-const AUTH_BACKEND = isLocal()
-  ? "https://localhost:8787"
-  : "https://framer.polar.sh";
+import { AUTH_BACKEND } from "@/utils";
 
 export interface Tokens {
   access_token: string;

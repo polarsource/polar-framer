@@ -162,11 +162,12 @@ async function handleRequest(request: Request, env: Env) {
     refreshParams.append("client_secret", env.CLIENT_SECRET);
     refreshParams.append("grant_type", "refresh_token");
 
-    const refreshUrl = new URL(env.TOKEN_ENDPOINT);
-    refreshUrl.search = refreshParams.toString();
-
-    const refreshResponse = await fetch(refreshUrl.toString(), {
+    const refreshResponse = await fetch(env.TOKEN_ENDPOINT, {
       method: "POST",
+      headers: {
+        "Content-Type": "application/x-www-form-urlencoded",
+      },
+      body: refreshParams.toString(),
     });
 
     if (refreshResponse.status !== 200) {

@@ -104,6 +104,7 @@ export const LicenseKeysBenefitForm = () => {
                       className="bg-neutral-800 placeholder:text-neutral-500 text-xs p-2 w-full"
                       type="number"
                       {...field}
+                      onChange={(e) => field.onChange(parseInt(e.target.value))}
                     />
                   </FormControl>
                   <FormMessage />
@@ -167,6 +168,7 @@ export const LicenseKeysBenefitForm = () => {
                       className="bg-neutral-800 placeholder:text-neutral-500 text-xs p-2 w-full"
                       type="number"
                       {...field}
+                      onChange={(e) => field.onChange(parseInt(e.target.value))}
                     />
                   </FormControl>
                   <FormMessage />
@@ -239,6 +241,7 @@ export const LicenseKeysBenefitForm = () => {
                       className="bg-neutral-800 placeholder:text-neutral-500 text-xs p-2 w-full"
                       type="number"
                       {...{ ...field, value }}
+                      onChange={(e) => field.onChange(parseInt(e.target.value))}
                     />
                   </FormControl>
                   <FormMessage />

@@ -12,6 +12,11 @@ import { Benefit, BenefitArticles, BenefitType } from "@polar-sh/sdk/models/comp
 export const isLocal = () => window.location.hostname.includes("localhost");
 export const baseUrl = isLocal() ? "http://127.0.0.1:3000" : "https://polar.sh";
 
+export const AUTH_BACKEND = isLocal()
+  ? "https://localhost:8787"
+  : "https://framer.polar.sh";
+
+
 export const POLAR_EMBED_COMPONENT_URL = "https://framer.com/m/Polar-JIAV.js";
 
 export const getCentsInDollarString = (

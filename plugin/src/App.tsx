@@ -1,8 +1,8 @@
 import { framer } from "framer-plugin";
 import "./App.css";
 import { LoginView, Tokens } from "./containers/LoginView";
-import { useCallback, useState } from "react";
-import { PolarProviders } from "./providers";
+import { useCallback, useEffect, useState } from "react";
+import { PolarProviders, queryClient } from "./providers";
 import { buildAPIClient } from "./api/polar";
 import { ProductsView } from "./containers/ProductsView";
 import {
@@ -17,6 +17,7 @@ import { OrganizationLayout } from "./layouts/OrganizationLayout";
 import { CreateProductView } from "./containers/CreateProductView";
 import { OnboardingView } from "./containers/OnboardingView";
 import { Polar } from "@polar-sh/sdk";
+import { useOrganizations } from "./hooks/organizations";
 
 framer.showUI({
   position: "top right",
@@ -38,12 +39,22 @@ const PluginRoutes = () => {
   const [apiClient, setApiClient] = useState<Polar>(new Polar());
   const navigate = useNavigate();
 
+  const onLogout = useCallback(() => {
+    localStorage.removeItem("tokens");
+    queryClient.clear();
+    queryClient.resetQueries();
+    setApiClient(new Polar());
+  }, [setApiClient]);
+
   const onLoginSuccess = useCallback(
     (tokens: Tokens) => {
       const apiClient = buildAPIClient(tokens.access_token);
       setApiClient(apiClient);
 
-      apiClient.organizations.list({ limit: 1 }).then((organizations) => {
+      queryClient.fetchQuery({
+        queryKey: ["organizations"],
+        queryFn: () => apiClient.organizations.list({ limit: 1 }),
+      }).then((organizations) => {
         if (organizations.result.items.length === 0) {
           navigate("/onboarding");
         } else {
@@ -54,12 +65,20 @@ const PluginRoutes = () => {
     [navigate]
   );
 
+  useEffect(() => {
+    const tokens = JSON.parse(localStorage.getItem("tokens") ?? "{}") as Tokens;
+    
+    if (!tokens.access_token) {
+      navigate("/");
+    }
+  }, []);
+
   return (
     <PolarProviders polar={apiClient}>
       <Routes>
         <Route index path="/" element={<LoginView onSuccess={onLoginSuccess} />} />
         <Route path="/onboarding" element={<OnboardingView />} />
-        <Route path="/products" element={<OrganizationLayout />}>
+        <Route path="/products" element={<OrganizationLayout onLogout={onLogout} />}>
           <Route index element={<ProductsView />} />
           <Route path=":id" element={<ProductView />} />
           <Route path="new" element={<CreateProductView />} />
