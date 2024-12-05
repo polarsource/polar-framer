@@ -34,6 +34,7 @@ export const FileList = ({
       // convert our setFiles to one without callback
       setFiles(() => updated)
     },
+    // @ts-expect-error
     (_: ProductMediaFileObject[]) => {},
   )
 

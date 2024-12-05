@@ -4,7 +4,6 @@ import { AddOutlined, TextureOutlined } from "@mui/icons-material";
 import { Link, useNavigate } from "react-router";
 import { useContext } from "react";
 import { OrganizationContext } from "../providers";
-import { ProductPriceLabel } from "@/components/ProductPriceLabel";
 import { ProductPrices } from "@/components/ProductPrices";
 
 export const ProductsView = () => {
@@ -78,12 +77,6 @@ const ProductRow = ({ product }: { product: Product }) => {
           <h3 className="text-sm font-medium truncate line-clamp-1">{product.name}</h3>
           <div className="flex text-xs text-neutral-500 flex-row items-center gap-x-2">
             <ProductPrices prices={product.prices} />
-            <div className="text-xs" style={{ fontSize: '0.5rem' }}>•</div>
-            <span>
-              {product.benefits.length === 1
-                ? "1 Benefit"
-                : `${product.benefits.length} Benefits`}
-            </span>
           </div>
         </div>
       </div>
