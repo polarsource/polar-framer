@@ -60,7 +60,7 @@ const BenefitRow = ({
         <span
           className={twMerge(
             "flex h-5 w-5 shrink-0 flex-row items-center justify-center rounded-full text-sm",
-            checked ? "bg-white text-black" : "bg-neutral-800 text-neutral-500"
+            checked ? "bg-white text-black" : "dark:bg-neutral-800 dark:text-neutral-500"
           )}
         >
           {checked ? (
@@ -94,7 +94,7 @@ const BenefitRow = ({
               <MoreVertOutlined fontSize="inherit" />
             </Button>
           </DropdownMenuTrigger>
-          <DropdownMenuContent align="end" className="bg-neutral-800 shadow-lg">
+          <DropdownMenuContent align="end" className="dark:bg-neutral-800 shadow-lg">
             <DropdownMenuItem>Edit</DropdownMenuItem>
             {benefit.deletable && (
               <DropdownMenuItem onClick={handleDeleteBenefit}>
@@ -139,7 +139,7 @@ const ProductBenefitsForm = ({
     <div className="flex flex-col gap-y-4">
       <div className="flex flex-col gap-y-2">
         <h3 className="text-sm font-medium">Automated Benefits</h3>
-        <p className="text-xs text-neutral-500">
+        <p className="text-xs dark:text-neutral-500">
          Benefits can be granted to customers upon purchase of this product, and are reusable across your organization.
         </p>
       </div>
@@ -166,7 +166,7 @@ const ProductBenefitsForm = ({
             />
           ))}
       </div>
-      <p className="text-[10px] text-neutral-600 text-center">
+      <p className="text-[10px] dark:text-neutral-600 text-center">
         Visit your{" "}
         <a
           href={`${baseUrl}/dashboard/${organization?.slug}`}
@@ -249,8 +249,8 @@ const BenefitsContainer = ({
     <div className="flex flex-col gap-1">
       <div
         className={twMerge(
-          "hover:border-neutral-800 group select-none flex cursor-pointer flex-row items-center justify-between gap-2 rounded-lg border px-3 py-2 text-sm transition-colors border-transparent",
-          open ? "bg-neutral-800" : "bg-neutral-900"
+          "hover:dark:border-neutral-800 group select-none flex cursor-pointer flex-row items-center justify-between gap-2 rounded-lg border px-3 py-2 text-sm transition-colors border-transparent",
+          open ? "dark:bg-neutral-800" : "dark:bg-neutral-900"
         )}
         onClick={() => {
           setOpen((v) => !v)
@@ -266,7 +266,7 @@ const BenefitsContainer = ({
           {hasEnabledBenefits ? (
             <div className="h-1.5 w-1.5 rounded-full bg-blue-500" />
           ) : null}
-          <span className="text-neutral-500 font-mono text-xs">
+          <span className="dark:text-neutral-500 font-mono text-xs">
             {benefits.length}
           </span>
           {open ? (
@@ -277,7 +277,7 @@ const BenefitsContainer = ({
         </span>
       </div>
       {open && !createBenefitSection ? (
-        <div className="border-neutral-800 mb-2 flex flex-col gap-y-4 rounded-lg border p-2 pt-3">
+        <div className="dark:border-neutral-800 mb-2 flex flex-col gap-y-4 rounded-lg border p-2 pt-3">
           {benefits.length > 0 ? (
             <div className="flex flex-col gap-y-1">
               {benefits.map((benefit) => {
@@ -294,7 +294,7 @@ const BenefitsContainer = ({
             </div>
           ) : (
             <div className="flex flex-col items-center">
-              <p className="text-neutral-500 text-xs text-center">
+              <p className="dark:text-neutral-500 text-xs text-center">
                 You haven&apos;t configured any {title}
               </p>
             </div>
@@ -312,7 +312,7 @@ const BenefitsContainer = ({
         </div>
       ) : null}
       {open && createBenefitSection ? (
-        <div className="flex flex-col gap-y-4 border-neutral-800 rounded-xl border p-4">
+        <div className="flex flex-col gap-y-4 dark:border-neutral-800 rounded-xl border p-4">
           <Form {...form}>
             <form className="flex flex-col gap-y-4"> 
               <BenefitForm organization={organization} type={createBenefitSection} />

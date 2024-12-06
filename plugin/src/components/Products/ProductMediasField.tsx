@@ -23,15 +23,15 @@ const DropzoneView = ({
     <>
       <div
         className={twMerge(
-          "flex aspect-video w-full cursor-pointer items-center justify-center rounded-2xl bg-neutral-900 px-4"
+          "flex aspect-video w-full cursor-pointer items-center justify-center rounded-2xl dark:bg-neutral-900 px-4"
         )}
       >
-        <div className="text-neutral-500 text-center flex flex-col gap-y-3 items-center">
+        <div className="dark:text-neutral-500 text-center flex flex-col gap-y-3 items-center">
           <AddPhotoAlternateOutlined fontSize="medium" />
-          <p className="text-neutral-200 text-xs font-medium ">
+          <p className="dark:text-neutral-200 text-xs font-medium ">
             {isDragActive ? "Drop it like it's hot" : "Add product media"}
           </p>
-          <p className="text-xs text-neutral-500">
+          <p className="text-xs dark:text-neutral-500">
             Up to 10MB each. 16:9 ratio recommended for optimal display.
           </p>
         </div>

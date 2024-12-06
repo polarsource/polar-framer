@@ -93,7 +93,7 @@ export const ProductView = () => {
           </Button>
         </div>
         <ProductPrices
-          className="text-base text-neutral-500"
+          className="text-base dark:text-neutral-500"
           prices={product.prices}
         />
       </div>
@@ -104,7 +104,7 @@ export const ProductView = () => {
           alt={product.name}
         />
       )}
-      <div className="prose prose-invert prose-headings:mt-4 prose-headings:font-medium prose-h1:text-2xl prose-h2:text-xl prose-h3:text-lg prose-h4:text-md prose-h5:text-sm prose-h6:text-sm prose-headings:text-white text-neutral-300">
+      <div className="prose prose-invert prose-headings:mt-4 prose-headings:font-medium prose-h1:text-2xl prose-h2:text-xl prose-h3:text-lg prose-h4:text-md prose-h5:text-sm prose-h6:text-sm prose-headings:text-white dark:text-neutral-300">
         <Markdown
           options={{
             disableParsingRawHTML: false,

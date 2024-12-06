@@ -166,6 +166,6 @@ const LoadingView = () => {
 
 const Skeleton = () => {
   return (
-    <div className="bg-neutral-900 rounded-md h-12 w-full animate-pulse" />
+    <div className="dark:bg-neutral-900 rounded-md h-12 w-full animate-pulse" />
   );
 };

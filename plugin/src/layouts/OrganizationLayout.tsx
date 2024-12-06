@@ -40,7 +40,7 @@ export const OrganizationLayout = ({ onLogout }: { onLogout: () => void }) => {
 
   return (
     <div className="flex w-full flex-grow min-h-0 h-full flex-col">
-      <div className="flex p-4 w-full flex-row items-center gap-x-2 border-b border-white/5">
+      <div className="flex p-4 w-full flex-row items-center gap-x-2 border-b dark:border-white/5 border-neutral-200 bg-neutral-50">
         <Link to="/products">
           <Avatar
             url={organization?.avatarUrl ?? ""}
@@ -48,7 +48,7 @@ export const OrganizationLayout = ({ onLogout }: { onLogout: () => void }) => {
           />
         </Link>
         <select
-          className="px-3 flex-grow bg-neutral-900"
+          className="px-3 flex-grow dark:bg-neutral-900"
           value={organization?.id}
           onChange={handleOrganizationChange}
         >
@@ -61,7 +61,7 @@ export const OrganizationLayout = ({ onLogout }: { onLogout: () => void }) => {
         <div className="flex flex-row items-center">
           <Button
             size="icon"
-            className="text-white rounded-full h-7 w-7"
+            className="rounded-full h-7 w-7"
             variant="ghost"
             onClick={() => navigate("/onboarding")}
           >
@@ -73,7 +73,7 @@ export const OrganizationLayout = ({ onLogout }: { onLogout: () => void }) => {
           >
             <Button
               size="icon"
-              className="text-white rounded-full h-7 w-7"
+              className="rounded-full h-7 w-7"
               variant="ghost"
             >
               <ArrowOutwardOutlined fontSize="small" />
@@ -81,7 +81,7 @@ export const OrganizationLayout = ({ onLogout }: { onLogout: () => void }) => {
           </a>
           <Button
             size="icon"
-            className="text-white rounded-full h-7 w-7"
+            className="rounded-full h-7 w-7"
             variant="ghost"
             onClick={onLogout}
           >

@@ -17,7 +17,6 @@ import { OrganizationLayout } from "./layouts/OrganizationLayout";
 import { CreateProductView } from "./containers/CreateProductView";
 import { OnboardingView } from "./containers/OnboardingView";
 import { Polar } from "@polar-sh/sdk";
-import { useOrganizations } from "./hooks/organizations";
 import { EditProductView } from "./containers/EditProductView";
 
 framer.showUI({
@@ -27,9 +26,34 @@ framer.showUI({
 });
 
 export function App() {
+
+  useEffect(() => {
+    const darkModeMediaQuery = window.matchMedia("(prefers-color-scheme: dark)");
+    const updateBodyClass = (e: MediaQueryListEvent) => {
+      if (e.matches) {
+        document.body.classList.add("dark");
+      } else {
+        document.body.classList.remove("dark");
+      }
+    };
+
+    if (darkModeMediaQuery.matches) {
+      document.body.classList.add("dark");
+    } else {
+      document.body.classList.remove("dark");
+    }
+
+    darkModeMediaQuery.addEventListener("change", updateBodyClass);
+
+    return () => {
+      darkModeMediaQuery.removeEventListener("change", updateBodyClass);
+    };
+  }, []);
+
+  
   return (
     <MemoryRouter>
-      <main className="flex flex-col p-0">
+      <main className="flex flex-col p-0 dark:bg-neutral-950 bg-neutral-100 text-black dark:text-white">
         <PluginRoutes />
       </main>
     </MemoryRouter>

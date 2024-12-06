@@ -152,7 +152,7 @@ import { InfoOutlined, WarningAmberOutlined, WarningOutlined } from "@mui/icons-
       />
 
       {(benefitsAdded.length > 0 || (benefitsRemoved?.length ?? 0) > 0) && (
-        <div className="rounded-lg text-xs p-3 text-neutral-500 bg-neutral-900 flex items-center gap-x-4">
+        <div className="rounded-lg text-xs p-3 dark:text-neutral-500 dark:bg-neutral-900 flex items-center gap-x-4">
           <InfoOutlined fontSize="small" />
           <div className="flex flex-row">
             Existing customers will immediately{' '}
@@ -211,7 +211,7 @@ import { InfoOutlined, WarningAmberOutlined, WarningOutlined } from "@mui/icons-
   
   const Skeleton = () => {
     return (
-      <div className="bg-neutral-900 rounded-md h-12 w-full animate-pulse" />
+      <div className="dark:bg-neutral-900 rounded-md h-12 w-full animate-pulse" />
     );
   };
   

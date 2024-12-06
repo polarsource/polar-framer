@@ -20,7 +20,7 @@ export const Avatar = ({ url, name, className }: AvatarProps) => {
   return (
     <div
       className={twMerge(
-        "flex items-center justify-center text-sm w-8 h-8 rounded-full bg-neutral-900 bg-cover bg-center",
+        "flex items-center justify-center text-sm w-8 h-8 rounded-full bg-cover bg-center",
         className
       )}
       style={{

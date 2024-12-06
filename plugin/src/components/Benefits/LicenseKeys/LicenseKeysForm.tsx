@@ -55,7 +55,7 @@ export const LicenseKeysBenefitForm = () => {
               </div>
               <FormControl>
                 <input
-                  className="bg-neutral-800 placeholder:text-neutral-500 text-xs p-2 w-full"
+                  className="dark:bg-neutral-800 placeholder:dark:text-neutral-500 text-xs p-2 w-full"
                   type="text"
                   {...{ ...field, value }}
                 />
@@ -101,7 +101,7 @@ export const LicenseKeysBenefitForm = () => {
                 <FormItem>
                   <FormControl>
                     <input
-                      className="bg-neutral-800 placeholder:text-neutral-500 text-xs p-2 w-full"
+                      className="dark:bg-neutral-800 placeholder:dark:text-neutral-500 text-xs p-2 w-full"
                       type="number"
                       {...field}
                       onChange={(e) => field.onChange(parseInt(e.target.value))}
@@ -121,7 +121,7 @@ export const LicenseKeysBenefitForm = () => {
                 <FormItem>
                   <FormControl>
                     <select
-                      className="bg-neutral-800 text-xs px-3 w-full"
+                      className="dark:bg-neutral-800 text-xs px-3 w-full"
                       value={field.value}
                       onChange={(e) => field.onChange(e.target.value)}
                     >
@@ -165,7 +165,7 @@ export const LicenseKeysBenefitForm = () => {
                 <FormItem>
                   <FormControl>
                     <input
-                      className="bg-neutral-800 placeholder:text-neutral-500 text-xs p-2 w-full"
+                      className="dark:bg-neutral-800 placeholder:dark:text-neutral-500 text-xs p-2 w-full"
                       type="number"
                       {...field}
                       onChange={(e) => field.onChange(parseInt(e.target.value))}
@@ -238,7 +238,7 @@ export const LicenseKeysBenefitForm = () => {
                 <FormItem>
                   <FormControl>
                     <input
-                      className="bg-neutral-800 placeholder:text-neutral-500 text-xs p-2 w-full"
+                      className="dark:bg-neutral-800 placeholder:dark:text-neutral-500 text-xs p-2 w-full"
                       type="number"
                       {...{ ...field, value }}
                       onChange={(e) => field.onChange(parseInt(e.target.value))}

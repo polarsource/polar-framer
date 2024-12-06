@@ -66,7 +66,7 @@ export const ProductPriceItem: React.FC<ProductPriceItemProps> = ({
             <FormItem className="grow">
               <div className="flex items-center gap-3">
                 {recurringInterval && (
-                  <span className="text-xs text-neutral-500 w-16">
+                  <span className="text-xs dark:text-neutral-500 w-16">
                     {recurringInterval === SubscriptionRecurringInterval.Month ? "Monthly" : "Yearly"}
                   </span>
                 )}
@@ -306,7 +306,7 @@ export const ProductPricingSection = ({
     <div className="flex flex-col gap-6">
       <div className="flex flex-col gap-y-2">
         <h2 className="text-sm font-semibold">Pricing</h2>
-        <p className="text-xs text-neutral-500">
+        <p className="text-xs dark:text-neutral-500">
           Set a one-time price, recurring price or a “pay what you want” pricing
           model
         </p>
@@ -342,7 +342,7 @@ export const ProductPricingSection = ({
               setAmountType(value as "fixed" | "custom" | "free")
             }
           >
-            <SelectTrigger className="bg-neutral-900 text-xs    ">
+            <SelectTrigger className="dark:bg-neutral-900 text-xs    ">
               <SelectValue placeholder="Select a product" />
             </SelectTrigger>
             <SelectContent>

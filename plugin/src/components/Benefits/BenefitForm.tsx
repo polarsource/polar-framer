@@ -68,12 +68,12 @@ export const BenefitForm = ({
             <FormItem>
               <div className="flex flex-row items-center justify-between">
                 <FormLabel className='text-xs'>Name</FormLabel>
-                <span className="text-neutral-400 text-xs">
+                <span className="dark:text-neutral-400 text-xs">
                   {field.value?.length ?? 0} / 42
                 </span>
               </div>
               <FormControl>
-                <input className='bg-neutral-800 text-xs p-2 w-full' {...field} />
+                <input className='dark:bg-neutral-800 text-xs p-2 w-full' {...field} />
               </FormControl>
               <FormMessage />
             </FormItem>
@@ -112,7 +112,7 @@ export const CustomBenefitForm = ({
               </div>
               <FormControl>
                 <textarea
-                  className='bg-neutral-800 placeholder:text-neutral-500 text-xs p-2 w-full min-h-24'
+                  className='dark:bg-neutral-800 placeholder:dark:text-neutral-500 text-xs p-2 w-full min-h-24'
                   {...field}
                   value={field.value || ''}
                   placeholder="Write a secret note here. Like your private email address for premium support, Cal.com link to book consultation, etc."
