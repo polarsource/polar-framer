@@ -209,6 +209,7 @@ export const ProductPricingSection = ({
     control,
     name: "prices",
   });
+  
   const { fields: prices, append, replace } = pricesFieldArray;
 
   const hasMonthlyPrice = useMemo(
@@ -241,7 +242,7 @@ export const ProductPricingSection = ({
       const initialAmountType = (prices as ProductPrice[])[0]?.amountType;
       return initialAmountType ?? "fixed";
     }
-  );
+ );
 
   useEffect(() => {
     if (update) return;

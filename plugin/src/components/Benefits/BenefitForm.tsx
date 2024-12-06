@@ -1,11 +1,3 @@
-import { Input } from '@/components/ui/input'
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from '@/components/ui/select'
 import {
   FormControl,
   FormField,
@@ -18,7 +10,6 @@ import { DownloadablesBenefitForm } from './Downloadables/DownloadablesForm'
 import { LicenseKeysBenefitForm } from './LicenseKeys/LicenseKeysForm'
 import { BenefitCustomCreate, BenefitType } from '@polar-sh/sdk/models/components'
 import { BenefitCreate, Organization } from '@polar-sh/sdk/models/components'
-import { benefitsDisplayNames } from '@/utils'
 
 export const NewBenefitForm = ({
   organization,
@@ -156,49 +147,5 @@ export const CustomBenefitForm = ({
         />
       )}
     </>
-  )
-}
-
-const BenefitTypeSelect = () => {
-  const { control } = useFormContext<BenefitCustomCreate>()
-  return (
-    <FormField
-      control={control}
-      name="type"
-      shouldUnregister={true}
-      render={({ field }) => {
-        return (
-          <FormItem>
-            <div className="flex flex-row items-center justify-between">
-              <FormLabel>Type</FormLabel>
-            </div>
-            <FormControl>
-              <Select onValueChange={field.onChange} defaultValue={field.value}>
-                <SelectTrigger>
-                  <SelectValue placeholder="Select Benefit Type" />
-                </SelectTrigger>
-                <SelectContent>
-                  {Object.values(BenefitType)
-                    .filter((value) => {
-                      switch (value) {
-                        case BenefitType.Articles:
-                          return false
-                        default:
-                          return true
-                      }
-                    })
-                    .map((value) => (
-                      <SelectItem key={value} value={value}>
-                        {benefitsDisplayNames[value]}
-                      </SelectItem>
-                    ))}
-                </SelectContent>
-              </Select>
-            </FormControl>
-            <FormMessage />
-          </FormItem>
-        )
-      }}
-    />
   )
 }

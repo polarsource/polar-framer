@@ -18,6 +18,7 @@ import { CreateProductView } from "./containers/CreateProductView";
 import { OnboardingView } from "./containers/OnboardingView";
 import { Polar } from "@polar-sh/sdk";
 import { useOrganizations } from "./hooks/organizations";
+import { EditProductView } from "./containers/EditProductView";
 
 framer.showUI({
   position: "top right",
@@ -81,6 +82,7 @@ const PluginRoutes = () => {
         <Route path="/products" element={<OrganizationLayout onLogout={onLogout} />}>
           <Route index element={<ProductsView />} />
           <Route path=":id" element={<ProductView />} />
+          <Route path=":id/edit" element={<EditProductView />} />
           <Route path="new" element={<CreateProductView />} />
         </Route>
         <Route path="*" element={<Navigate to="/" />} />

@@ -140,8 +140,7 @@ const ProductBenefitsForm = ({
       <div className="flex flex-col gap-y-2">
         <h3 className="text-sm font-medium">Automated Benefits</h3>
         <p className="text-xs text-neutral-500">
-          Configure which benefits you want to grant to your customers when they
-          purchase the product
+         Benefits can be granted to customers upon purchase of this product, and are reusable across your organization.
         </p>
       </div>
       <div className="flex w-full flex-col gap-y-2">
@@ -201,7 +200,7 @@ const BenefitsContainer = ({
   const hasEnabledBenefits = benefits.some((benefit) => {
     return enabledBenefits.some((b) => b.id === benefit.id);
   });
-  const [open, setOpen] = useState(hasEnabledBenefits);
+  const [open, setOpen] = useState(false);
   const { organization } = useContext(OrganizationContext);
   const [isLoading, setIsLoading] = useState(false);
   const [createBenefitSection, setCreateBenefitSection] = useState<BenefitType>();
@@ -216,7 +215,7 @@ const BenefitsContainer = ({
     defaultValues: {
       organizationId: organization?.id ?? '',
       type: type ? type : 'custom',
-      isTaxApplicable: false,
+      isTaxApplicable: true
     },
   })
 

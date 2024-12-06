@@ -2,7 +2,6 @@ import { useProducts } from "../hooks/products";
 import { Product } from "@polar-sh/sdk/models/components";
 import {
   AddOutlined,
-  HiveOutlined,
   TextureOutlined,
 } from "@mui/icons-material";
 import { Link, useNavigate } from "react-router";

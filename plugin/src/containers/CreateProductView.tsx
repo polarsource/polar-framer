@@ -78,8 +78,6 @@ export const CreateProductView = () => {
     [navigate, enabledBenefitIds, createProduct, updateBenefits]
   );
 
-
-
   const onSelectBenefit = useCallback(
     (benefit: Benefit) => {
       setEnabledBenefitIds((benefitIds) => [...benefitIds, benefit.id])
