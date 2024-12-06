@@ -66,7 +66,7 @@ export const ProductPriceItem: React.FC<ProductPriceItemProps> = ({
             <FormItem className="grow">
               <div className="flex items-center gap-3">
                 {recurringInterval && (
-                  <span className="text-xs dark:text-neutral-500 w-16">
+                  <span className="text-xs text-neutral-500 w-16">
                     {recurringInterval === SubscriptionRecurringInterval.Month ? "Monthly" : "Yearly"}
                   </span>
                 )}
@@ -306,7 +306,7 @@ export const ProductPricingSection = ({
     <div className="flex flex-col gap-6">
       <div className="flex flex-col gap-y-2">
         <h2 className="text-sm font-semibold">Pricing</h2>
-        <p className="text-xs dark:text-neutral-500">
+        <p className="text-xs text-neutral-500">
           Set a one-time price, recurring price or a “pay what you want” pricing
           model
         </p>
@@ -319,15 +319,15 @@ export const ProductPricingSection = ({
               setPricingType(value as ProductPriceType)
             }
           >
-            <TabsList className="w-full flex flex-row gap-x-1">
+            <TabsList className="w-full flex flex-row gap-x-1 rounded-full">
               <TabsTrigger
-                className="text-xs flex-1"
+                className="text-xs flex-1 rounded-full"
                 value={ProductPriceType.OneTime}
               >
                 Pay Once
               </TabsTrigger>
               <TabsTrigger
-                className="text-xs flex-1"
+                className="text-xs flex-1 rounded-full"
                 value={ProductPriceType.Recurring}
               >
                 Subscription
@@ -336,23 +336,19 @@ export const ProductPricingSection = ({
           </Tabs>
         )}
         {!update && (
-          <Select
+          <select
             value={amountType}
-            onValueChange={(value) =>
-              setAmountType(value as "fixed" | "custom" | "free")
+            onChange={(e) =>
+              setAmountType(e.target.value as "fixed" | "custom" | "free")
             }
+            className="dark:bg-neutral-900 bg-neutral-100 text-xs py-2 px-3 w-full"
           >
-            <SelectTrigger className="dark:bg-neutral-900 text-xs    ">
-              <SelectValue placeholder="Select a product" />
-            </SelectTrigger>
-            <SelectContent>
-              <SelectItem value="fixed" className="text-xs">Fixed price</SelectItem>
-              {pricingType === ProductPriceType.OneTime && (
-                <SelectItem value="custom" className="text-xs">Pay what you want</SelectItem>
-              )}
-              <SelectItem value="free" className="text-xs">Free</SelectItem>
-            </SelectContent>
-          </Select>
+            <option value="fixed" className="text-xs">Fixed price</option>
+            {pricingType === ProductPriceType.OneTime && (
+              <option value="custom" className="text-xs">Pay what you want</option>
+            )}
+            <option value="free" className="text-xs">Free</option>
+          </select>
         )}
         <div className="flex flex-col gap-2">
           {prices.map((price, index) => (
@@ -381,7 +377,7 @@ export const ProductPricingSection = ({
                 <Button
                   size="sm"
                   variant="secondary"
-                  className="self-start"
+                  className="self-start rounded-full"
                   type="button"
                   onClick={() => {
                     append({
@@ -401,7 +397,7 @@ export const ProductPricingSection = ({
                 <Button
                   size="sm"
                   variant="secondary"
-                  className="self-start"
+                  className="self-start rounded-full"
                   type="button"
                   onClick={() => {
                     append({

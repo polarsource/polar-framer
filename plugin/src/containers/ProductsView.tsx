@@ -21,10 +21,10 @@ export const ProductsView = () => {
 
   return (
     <>
-      <div className="border-b dark:border-neutral-900 border-neutral-200 flex flex-row items-center p-4 gap-x-4 justify-between">
+      <div className="border-b dark:border-neutral-900 border-neutral-100 flex flex-row items-center p-4 gap-x-4 justify-between">
         <h3 className="text-sm font-medium">Products</h3>
         <button
-          className="bg-blue-500 text-white w-6 h-6 flex flex-col items-center justify-center rounded-full"
+          className="bg-blue-500 text-white hover:bg-blue-400 dark:hover:bg-blue-600 w-6 h-6 flex flex-col items-center justify-center rounded-full"
           onClick={() => navigate("/products/new")}
         >
           <AddOutlined fontSize="inherit" />
@@ -88,7 +88,7 @@ const ProductRow = ({ product }: { product: Product }) => {
   return (
     <Link
       to={`/products/${product.id}`}
-      className="flex flex-row gap-2 dark:bg-neutral-900 hover:dark:bg-neutral-800 p-2 rounded-xl transition-colors duration-75 cursor-pointer"
+      className="flex flex-row gap-2 dark:bg-neutral-900 bg-neutral-100 hover:bg-neutral-50 hover:dark:bg-neutral-800 p-2 rounded-xl transition-colors duration-75 cursor-pointer"
     >
       <div className="flex w-full flex-row items-center gap-x-4">
         {product.medias[0] ? (
@@ -98,15 +98,15 @@ const ProductRow = ({ product }: { product: Product }) => {
             className="w-12 h-12 object-cover rounded-md"
           />
         ) : (
-          <div className="w-12 h-12 flex flex-col items-center justify-center rounded-md dark:bg-neutral-800">
-            <TextureOutlined className="dark:text-neutral-700" />
+          <div className="w-12 h-12 flex flex-col items-center justify-center rounded-md dark:bg-neutral-800 bg-neutral-200">
+            <TextureOutlined className="dark:text-neutral-700 text-neutral-400" />
           </div>
         )}
         <div className="flex flex-col gap-y-1">
           <h3 className="text-sm font-medium truncate line-clamp-1">
             {product.name}
           </h3>
-          <div className="flex text-xs dark:text-neutral-500 flex-row items-center gap-x-2">
+          <div className="flex text-xs text-neutral-500 flex-row items-center gap-x-2">
             <ProductPrices prices={product.prices} />
           </div>
         </div>

@@ -21,7 +21,7 @@ export const ProductInfoSection = () => {
     <div className="flex flex-col gap-y-6">
       <div className="flex flex-col gap-y-2">
         <h2 className="text-sm font-semibold">Product</h2>
-        <p className="text-xs dark:text-neutral-500">
+        <p className="text-xs text-neutral-500">
           Basic product information which helps identify the product
         </p>
       </div>

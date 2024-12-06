@@ -46,7 +46,7 @@ import { Benefit } from '@polar-sh/sdk/models/components'
     }
   
     return (
-      <div className="flex flex-col gap-y-4 dark:bg-neutral-900 p-4 rounded-2xl">
+      <div className="flex flex-col gap-y-4 dark:bg-neutral-900 bg-neutral-100 p-4 rounded-2xl">
         <h2 className="text-sm font-medium">Benefits</h2>
         <div className="flex flex-col gap-y-2">
           {shown.map((benefit) => (

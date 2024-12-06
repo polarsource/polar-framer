@@ -36,11 +36,9 @@ export const OrganizationLayout = ({ onLogout }: { onLogout: () => void }) => {
     }
   }, [organizations, organization, setOrganization]);
 
-  const polar = useContext(PolarAPIContext);
-
   return (
     <div className="flex w-full flex-grow min-h-0 h-full flex-col">
-      <div className="flex p-4 w-full flex-row items-center gap-x-2 border-b dark:border-white/5 border-neutral-200 bg-neutral-50">
+      <div className="flex p-4 w-full flex-row items-center gap-x-2 border-y dark:border-t-0 dark:border-white/5 border-neutral-100">
         <Link to="/products">
           <Avatar
             url={organization?.avatarUrl ?? ""}

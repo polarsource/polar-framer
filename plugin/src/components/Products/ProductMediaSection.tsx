@@ -25,7 +25,7 @@ export const ProductMediaSection = () => {
     <div className="flex flex-col gap-y-6">
       <div className="flex flex-col gap-y-2">
         <h2 className="text-sm font-semibold">Media</h2>
-        <p className="text-xs dark:text-neutral-500">
+        <p className="text-xs text-neutral-500">
           Enhance the product page with medias, giving the customers a better idea of the product
         </p>
       </div>

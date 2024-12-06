@@ -141,7 +141,7 @@ const FilenameEditor = ({
 };
 
 const FileUploadDetails = ({ file }: { file: FileObject }) => {
-  return <p className="text-xs dark:text-neutral-500">{file.sizeReadable}</p>;
+  return <p className="text-xs text-neutral-500">{file.sizeReadable}</p>;
 };
 
 export const FileListItem = ({
@@ -212,7 +212,7 @@ export const FileListItem = ({
     <div
       ref={sortable ? sortable.setNodeRef : undefined}
       className={twMerge(
-        "hover:dark:bg-neutral-800 dark:bg-neutral-900 dark:text-neutral-500 flex flex-row items-center justify-between gap-x-8 gap-y-2 rounded-xl px-3 py-2 transition-colors",
+        "hover:dark:bg-neutral-800 dark:bg-neutral-900 text-neutral-500 flex flex-row items-center justify-between gap-x-8 gap-y-2 rounded-xl px-3 py-2 transition-colors",
         sortable?.isDragging && "opacity-30"
       )}
       style={

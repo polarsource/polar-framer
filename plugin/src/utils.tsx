@@ -58,7 +58,7 @@ export const resolveBenefitCategoryIcon = (
   fontSize: 'small' | 'inherit' | 'large' | 'medium' = 'small',
   className?: string,
 ) => {
-  const cn = twMerge('h-4 w-4', className)
+  const cn = twMerge('h-4 w-4 text-black dark:text-white', className)
   switch (type) {
     case BenefitType.Articles:
       return <StickyNote2 className={cn} fontSize={fontSize} />

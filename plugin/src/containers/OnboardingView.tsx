@@ -44,14 +44,14 @@ export const OnboardingView = () => {
         <LogoIcon size={40} />
         <div className="flex flex-col gap-y-1 text-center items-center">
           <h1 className="text-lg font-medium">Welcome to Polar</h1>
-          <p className="text-sm dark:text-neutral-500">
+          <p className="text-sm text-neutral-500">
             Let's create your organization
           </p>
         </div>
         <div className="flex flex-col gap-y-2 w-full">
           <Input
             type="text"
-            className="dark:bg-neutral-900 text-sm placeholder:dark:text-neutral-500"
+            className="dark:bg-neutral-900 bg-neutral-100 text-sm placeholder:text-neutral-500 rounded-lg"
             placeholder="Name"
             value={name}
             onChange={handleOrganizationNameChange}
@@ -59,7 +59,7 @@ export const OnboardingView = () => {
           />
           <Input
             type="text"
-            className="dark:bg-neutral-900 text-sm placeholder:dark:text-neutral-500"
+            className="dark:bg-neutral-900 bg-neutral-100 text-sm placeholder:text-neutral-500 rounded-lg"
             placeholder="Slug"
             value={slug}
             onChange={handleOrganizationSlugChange}
@@ -70,7 +70,7 @@ export const OnboardingView = () => {
 
       <div className="flex flex-col gap-y-2 w-full">
         <Button
-          className="rounded-full"
+          className="rounded-full disabled:text-black dark:disabled:text-white"
           size="sm"
           onClick={handleCreateOrganization}
           disabled={name.length < 3 || slug.length < 3}

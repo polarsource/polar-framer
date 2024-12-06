@@ -53,7 +53,7 @@ export function App() {
   
   return (
     <MemoryRouter>
-      <main className="flex flex-col p-0 dark:bg-neutral-950 bg-neutral-100 text-black dark:text-white">
+      <main className="flex flex-col p-0 dark:bg-neutral-950 bg-white text-black dark:text-white">
         <PluginRoutes />
       </main>
     </MemoryRouter>

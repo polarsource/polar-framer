@@ -112,7 +112,7 @@ export const CustomBenefitForm = ({
               </div>
               <FormControl>
                 <textarea
-                  className='dark:bg-neutral-800 placeholder:dark:text-neutral-500 text-xs p-2 w-full min-h-24'
+                  className='dark:bg-neutral-800 placeholder:text-neutral-500 text-xs p-2 w-full min-h-24'
                   {...field}
                   value={field.value || ''}
                   placeholder="Write a secret note here. Like your private email address for premium support, Cal.com link to book consultation, etc."

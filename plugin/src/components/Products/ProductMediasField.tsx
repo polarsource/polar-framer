@@ -23,15 +23,15 @@ const DropzoneView = ({
     <>
       <div
         className={twMerge(
-          "flex aspect-video w-full cursor-pointer items-center justify-center rounded-2xl dark:bg-neutral-900 px-4"
+          "flex aspect-video w-full cursor-pointer items-center justify-center rounded-2xl dark:bg-neutral-900 bg-neutral-50 px-4"
         )}
       >
-        <div className="dark:text-neutral-500 text-center flex flex-col gap-y-3 items-center">
+        <div className="text-neutral-500 text-center flex flex-col gap-y-3 items-center">
           <AddPhotoAlternateOutlined fontSize="medium" />
-          <p className="dark:text-neutral-200 text-xs font-medium ">
+          <p className="text-black dark:text-white text-xs font-medium ">
             {isDragActive ? "Drop it like it's hot" : "Add product media"}
           </p>
-          <p className="text-xs dark:text-neutral-500">
+          <p className="text-xs text-neutral-500">
             Up to 10MB each. 16:9 ratio recommended for optimal display.
           </p>
         </div>
@@ -123,7 +123,7 @@ const ProductMediasField = ({
         </div>
       </div>
       {filesRejected.length > 0 && (
-        <div className="rounded-lg border p-4 text-red-800 border-red-800 bg-red-900">
+        <div className="rounded-lg p-4 text-red-500 bg-red-50 dark:bg-red-900">
           {filesRejected.map((file) => (
             <p key={file.file.name}>
               {file.file.name} is not a valid image or is too large.

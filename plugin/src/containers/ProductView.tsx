@@ -79,7 +79,7 @@ export const ProductView = () => {
   if (!product) return null;
 
   return (
-    <div className="flex flex-col gap-6 p-4 overflow-y-auto">
+    <div className="flex flex-col gap-6 p-4 overflow-y-auto flex-grow">
       <div className="flex flex-col gap-2">
         <div className="flex flex-row justify-between items-start">
           <h1 className="text-xl font-medium">{product.name}</h1>
@@ -93,7 +93,7 @@ export const ProductView = () => {
           </Button>
         </div>
         <ProductPrices
-          className="text-base dark:text-neutral-500"
+          className="text-base text-neutral-500"
           prices={product.prices}
         />
       </div>

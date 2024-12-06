@@ -78,14 +78,14 @@ export const LoginView = ({ onSuccess }: LoginViewProps) => {
       <div className="flex flex-col flex-grow items-center justify-center gap-8">
         <LogoIcon size={50} />
         <h1 className="text-lg font-medium text-center text-pretty px-4">
-          Digital Products & Payments <span className="dark:text-neutral-500">made easy</span>
+          Digital Products & Payments <span className="text-neutral-500">made easy</span>
         </h1>
         <Button className="w-fit px-6 rounded-full" onClick={login}>
           <span>Get Started</span>
           <KeyboardArrowRight className="w-6 h-6" />
         </Button>
       </div>
-        <div className="text-xs flex flex-col items-center hover:dark:text-neutral-500 transition-colors">
+        <div className="text-xs flex flex-col items-center hover:text-neutral-500 transition-colors">
           <a href="https://polar.sh" target="_blank" rel="noreferrer">polar.sh</a>
         </div>
     </div>
