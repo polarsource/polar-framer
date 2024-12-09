@@ -191,25 +191,8 @@ async function handleRequest(request: Request, env: Env) {
 function getCORSAllowOriginHeader(request: Request, env: Env) {
   const origin = request.headers.get("Origin");
 
-  const defaultCORSHeader = `https://${env.PLUGIN_ID}.${env.PLUGIN_PARENT_DOMAIN}`;
+  const defaultCORSHeader = `https://*.${env.PLUGIN_PARENT_DOMAIN}`;
 
-  if (!origin) return defaultCORSHeader;
-
-  const originURL = new URL(origin);
-  if (originURL.hostname === "localhost") {
-    return originURL.origin;
-  }
-
-  // Support for versioned plugins
-  const [hostLabel, ...parentDomainLabels] = originURL.hostname.split(".");
-  if (
-    parentDomainLabels.join(".") === env.PLUGIN_PARENT_DOMAIN &&
-    hostLabel.startsWith(env.PLUGIN_ID)
-  ) {
-    return originURL.origin;
-  }
-
-  // Otherwise set the CORS header to non versioned plugin URI always
   return defaultCORSHeader;
 }
 
