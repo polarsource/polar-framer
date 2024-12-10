@@ -2,4 +2,4 @@
 
 The official Polar plugin for Framer. The simplest way to sell digital products on your site.
 
-<video src='./polar-for-framer.mp4' autoPlay muted loop />
+<video src='https://github.com/polarsource/polar-framer/blob/main/polar-for-framer.webm' autoPlay muted loop />
