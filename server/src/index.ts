@@ -191,11 +191,20 @@ async function handleRequest(request: Request, env: Env) {
 function getCORSAllowOriginHeader(request: Request, env: Env) {
   const origin = request.headers.get("Origin");
 
+  const defaultCORSHeader = `https://${env.PLUGIN_ID}.${env.PLUGIN_PARENT_DOMAIN}`;
+
   if (origin && origin.endsWith(`.${env.PLUGIN_PARENT_DOMAIN}`)) {
     return origin;
   }
 
-  return `https://${env.PLUGIN_PARENT_DOMAIN}`;
+  if (!origin) return defaultCORSHeader;
+
+  const originURL = new URL(origin);
+  if (originURL.hostname === "localhost") {
+    return originURL.origin;
+  }
+
+  return defaultCORSHeader;
 }
 
 function addCorsHeaders(request: Request, response: Response, env: Env) {
