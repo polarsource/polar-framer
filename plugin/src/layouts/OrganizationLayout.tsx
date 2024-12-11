@@ -1,12 +1,17 @@
 import { useEffect, useContext, useCallback } from "react";
 import { Avatar } from "../components/Avatar";
 import { useOrganizations } from "../hooks/organizations";
-import { Link, Outlet, useNavigate } from "react-router";
-import { OrganizationContext, PolarAPIContext, queryClient } from "../providers";
+import { Link, Outlet, useLocation, useNavigate } from "react-router";
+import {
+  OrganizationContext,
+  PolarAPIContext,
+  queryClient,
+} from "../providers";
 import { Organization } from "@polar-sh/sdk/models/components";
 import { Button } from "@/components/ui/button";
 import {
   AddOutlined,
+  ArrowBackOutlined,
   ArrowOutwardOutlined,
   LogoutOutlined,
 } from "@mui/icons-material";
@@ -36,14 +41,23 @@ export const OrganizationLayout = ({ onLogout }: { onLogout: () => void }) => {
     }
   }, [organizations, organization, setOrganization]);
 
+  const pathname = useLocation().pathname;
+  const shouldRenderBackButton = pathname !== "/products";
+
   return (
     <div className="flex w-full flex-grow min-h-0 h-full flex-col">
       <div className="flex p-4 w-full flex-row items-center gap-x-2 border-y dark:border-t-0 dark:border-white/5 border-neutral-100">
         <Link to="/products">
-          <Avatar
-            url={organization?.avatarUrl ?? ""}
-            name={organization?.name ?? ""}
-          />
+          {shouldRenderBackButton ? (
+            <Button size="icon" className="rounded-full h-8 w-8" variant="ghost">
+              <ArrowBackOutlined fontSize="small" />
+            </Button>
+          ) : (
+            <Avatar
+              url={organization?.avatarUrl ?? ""}
+              name={organization?.name ?? ""}
+            />
+          )}
         </Link>
         <select
           className="px-3 flex-grow dark:bg-neutral-900"
