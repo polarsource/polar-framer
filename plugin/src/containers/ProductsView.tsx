@@ -1,18 +1,15 @@
 import { useProducts } from "../hooks/products";
-import { Product } from "@polar-sh/sdk/models/components";
-import {
-  AddOutlined,
-  TextureOutlined,
-} from "@mui/icons-material";
-import { Link, useNavigate } from "react-router";
+import { Product } from "@polar-sh/sdk/models/components/product";
+import { AddOutlined, TextureOutlined } from "@mui/icons-material";
+import { Link } from "react-router";
 import { useContext } from "react";
 import { OrganizationContext } from "../providers";
 import { ProductPrices } from "@/components/ProductPrices";
 import { Button } from "@/components/ui/button";
+import { baseUrl } from "@/utils";
 
 export const ProductsView = () => {
   const { organization } = useContext(OrganizationContext);
-  const navigate = useNavigate();
   const { data: products } = useProducts({
     limit: 100,
     organizationId: organization?.id,
@@ -23,12 +20,14 @@ export const ProductsView = () => {
     <>
       <div className="border-b dark:border-neutral-900 border-neutral-100 flex flex-row items-center p-4 gap-x-4 justify-between">
         <h3 className="text-sm font-medium">Products</h3>
-        <button
-          className="bg-blue-500 text-white hover:bg-blue-400 dark:hover:bg-blue-600 w-6 h-6 flex flex-col items-center justify-center rounded-full"
-          onClick={() => navigate("/products/new")}
+        <a
+          href={`${baseUrl}/dashboard/${organization?.slug}/products/new`}
+          target="_blank"
         >
-          <AddOutlined fontSize="inherit" />
-        </button>
+          <button className="bg-blue-500 text-white hover:bg-blue-400 dark:hover:bg-blue-600 w-6 h-6 flex flex-col items-center justify-center rounded-full">
+            <AddOutlined fontSize="inherit" />
+          </button>
+        </a>
       </div>
       {products ? (
         products.result.items.length > 0 ? (
@@ -48,14 +47,14 @@ export const ProductsView = () => {
                   Start selling digital products today
                 </p>
               </div>
-              <Button
-                className="rounded-full"
-                size="sm"
-                variant="secondary"
-                onClick={() => navigate("/products/new")}
+              <a
+                href={`${baseUrl}/dashboard/${organization?.slug}/products/new`}
+                target="_blank"
               >
-                Create Product
-              </Button>
+                <Button className="rounded-full" size="sm" variant="secondary">
+                  Create Product
+                </Button>
+              </a>
             </div>
           </div>
         )

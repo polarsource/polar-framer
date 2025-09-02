@@ -1,4 +1,4 @@
-import { useNavigate, useParams } from "react-router";
+import { useParams } from "react-router";
 import { useProduct } from "../hooks/products";
 import { POLAR_EMBED_COMPONENT_URL } from "@/utils";
 import { framer } from "framer-plugin";
@@ -12,7 +12,6 @@ import { BenefitsList } from "@/components/Benefits/BenefitsList";
 
 export const ProductView = () => {
   const { id } = useParams();
-  const navigate = useNavigate();
   const { data: product } = useProduct(id);
   const { organization } = useContext(OrganizationContext);
   const { data: checkoutLinks } = useCheckoutLinks(
@@ -31,6 +30,7 @@ export const ProductView = () => {
     return await createCheckoutLink({
       label: "Framer Checkout Link",
       productId: product.id,
+      paymentProcessor: "stripe",
     });
   }, [organization?.id, product?.id, createCheckoutLink]);
 
@@ -83,14 +83,6 @@ export const ProductView = () => {
       <div className="flex flex-col gap-2">
         <div className="flex flex-row justify-between items-start">
           <h1 className="text-xl font-medium">{product.name}</h1>
-          <Button
-            className="rounded-full h-7 w-fit"
-            size="sm"
-            variant="secondary"
-            onClick={() => navigate(`/products/${product.id}/edit`)}
-          >
-            Edit
-          </Button>
         </div>
         <ProductPrices
           className="text-base text-neutral-500"

@@ -4,10 +4,10 @@ import {
   FileDownloadOutlined,
   GitHub,
   KeyOutlined,
-  StickyNote2,
-  WebOutlined,
-} from '@mui/icons-material'
-import { Benefit, BenefitArticles, BenefitType } from "@polar-sh/sdk/models/components";
+} from "@mui/icons-material";
+import { Benefit } from "@polar-sh/sdk/models/components/benefit";
+import { BenefitType } from "@polar-sh/sdk/models/components/benefittype.js";
+import { CircleGaugeIcon } from "lucide-react";
 
 export const isLocal = () => window.location.hostname.includes("localhost");
 export const baseUrl = isLocal() ? "http://127.0.0.1:3000" : "https://polar.sh";
@@ -15,7 +15,6 @@ export const baseUrl = isLocal() ? "http://127.0.0.1:3000" : "https://polar.sh";
 export const AUTH_BACKEND = isLocal()
   ? "https://localhost:8787"
   : "https://framer.polar.sh";
-
 
 export const POLAR_EMBED_COMPONENT_URL = "https://framer.com/m/Polar-JIAV.js";
 
@@ -51,65 +50,61 @@ export const formatCurrencyAndAmount = (
   return currencyNumberFormat.format(cents / 100);
 };
 
-export type CreatableBenefit = Exclude<BenefitType, 'articles'>
+export type CreatableBenefit = Exclude<BenefitType, "articles">;
 
 export const resolveBenefitCategoryIcon = (
   type?: BenefitType,
-  fontSize: 'small' | 'inherit' | 'large' | 'medium' = 'small',
-  className?: string,
+  fontSize: "small" | "inherit" | "large" | "medium" = "small",
+  className?: string
 ) => {
-  const cn = twMerge('h-4 w-4 text-black dark:text-white', className)
+  const cn = twMerge("h-4 w-4 text-black dark:text-white", className);
   switch (type) {
-    case BenefitType.Articles:
-      return <StickyNote2 className={cn} fontSize={fontSize} />
-    case BenefitType.Ads:
-      return <WebOutlined className={cn} fontSize={fontSize} />
     case BenefitType.Discord:
-      return <DiscordIcon className={cn} />
+      return <DiscordIcon className={cn} />;
+    case BenefitType.MeterCredit:
+      return <CircleGaugeIcon className={cn} />;
     case BenefitType.GithubRepository:
-      return <GitHub className={cn} fontSize={fontSize} />
+      return <GitHub className={cn} fontSize={fontSize} />;
     case BenefitType.Downloadables:
-      return <FileDownloadOutlined className={cn} fontSize={fontSize} />
+      return <FileDownloadOutlined className={cn} fontSize={fontSize} />;
     case BenefitType.LicenseKeys:
-      return <KeyOutlined className={cn} fontSize={fontSize} />
+      return <KeyOutlined className={cn} fontSize={fontSize} />;
     default:
-      return <CheckOutlined className={cn} fontSize={fontSize} />
+      return <CheckOutlined className={cn} fontSize={fontSize} />;
   }
-}
+};
 
 export const resolveBenefitIcon = (
   benefit?: Benefit,
-  fontSize: 'small' | 'inherit' | 'large' | 'medium' = 'small',
-  className?: string,
+  fontSize: "small" | "inherit" | "large" | "medium" = "small",
+  className?: string
 ) => {
-  return resolveBenefitCategoryIcon(benefit?.type, fontSize, className)
-}
+  return resolveBenefitCategoryIcon(benefit?.type, fontSize, className);
+};
 
 export const resolveBenefitTypeDisplayName = (type: BenefitType) => {
   switch (type) {
-    case BenefitType.Articles:
-      return 'Newsletter'
-    case BenefitType.Ads:
-      return 'Advertisement Spot'
     case BenefitType.Discord:
-      return 'Discord Server Invite'
+      return "Discord Server Invite";
     case BenefitType.GithubRepository:
-      return 'GitHub Repository Access'
+      return "GitHub Repository Access";
     case BenefitType.Downloadables:
-      return 'Downloadable Files'
+      return "Downloadable Files";
     case BenefitType.LicenseKeys:
-      return 'License Keys'
+      return "License Keys";
+    case BenefitType.MeterCredit:
+      return "Meter Credit";
     default:
-      return 'Custom'
+      return "Custom";
   }
-}
+};
 
 export const DiscordIcon = ({
   className,
   size = 16,
 }: {
-  className?: string
-  size?: number
+  className?: string;
+  size?: number;
 }) => (
   <svg
     className={className}
@@ -127,25 +122,15 @@ export const DiscordIcon = ({
       ></path>
     </g>
   </svg>
-)
+);
 
 export const benefitsDisplayNames: {
-  [key in BenefitType]: string
+  [key in BenefitType]: string;
 } = {
-  [BenefitType.LicenseKeys]: 'License Keys',
-  [BenefitType.GithubRepository]: 'GitHub Repository Access',
-  [BenefitType.Discord]: 'Discord Invite',
-  [BenefitType.Downloadables]: 'File Downloads',
-  [BenefitType.Ads]: 'Ad',
-  [BenefitType.Articles]: 'Newsletter',
-  [BenefitType.Custom]: 'Custom',
-}
-
-const isArticleBenefit = (
-  benefit: Benefit,
-): benefit is BenefitArticles => benefit.type === BenefitType.Articles
-
-export const isPremiumArticlesBenefit = (
-  benefit: Benefit,
-): boolean =>
-  isArticleBenefit(benefit) && benefit.properties.paidArticles === true
+  [BenefitType.LicenseKeys]: "License Keys",
+  [BenefitType.GithubRepository]: "GitHub Repository Access",
+  [BenefitType.Discord]: "Discord Invite",
+  [BenefitType.Downloadables]: "File Downloads",
+  [BenefitType.MeterCredit]: "Meter Credit",
+  [BenefitType.Custom]: "Custom",
+};

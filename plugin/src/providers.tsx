@@ -1,9 +1,13 @@
 import { createContext, PropsWithChildren, useState } from "react";
-import { QueryClientProvider, QueryClient, QueryCache } from "@tanstack/react-query";
+import {
+  QueryClientProvider,
+  QueryClient,
+  QueryCache,
+} from "@tanstack/react-query";
 import { Polar } from "@polar-sh/sdk";
-import { Organization } from "@polar-sh/sdk/models/components";
 import { Tokens } from "./containers/LoginView";
 import { AUTH_BACKEND } from "./utils";
+import { Organization } from "@polar-sh/sdk/models/components/organization";
 
 // @ts-expect-error
 export const queryClient = new QueryClient({
@@ -14,10 +18,10 @@ export const queryClient = new QueryClient({
   },
   queryCache: new QueryCache({
     onError: (error, query) => {
-      if (
-        error.message.includes("401")
-      ) {
-        const tokens = JSON.parse(localStorage.getItem("tokens") ?? "{}") as Tokens;
+      if (error.message.includes("401")) {
+        const tokens = JSON.parse(
+          localStorage.getItem("tokens") ?? "{}"
+        ) as Tokens;
 
         fetch(`${AUTH_BACKEND}/refresh?code=${tokens.refresh_token}`, {
           method: "POST",
@@ -42,14 +46,16 @@ export const PolarAPIContext = createContext<Polar>(() => {
   throw new Error("PolarAPIContext not found");
 });
 
-// @ts-expect-error 
+// @ts-expect-error
 export const OrganizationContext = createContext<{
   organization: Organization | undefined;
   setOrganization: (organization: Organization | undefined) => void;
 }>({ organization: undefined, setOrganization: () => {} });
 
 const OrganizationProvider = ({ children }: PropsWithChildren) => {
-  const [organization, setOrganization] = useState<Organization | undefined>(undefined);
+  const [organization, setOrganization] = useState<Organization | undefined>(
+    undefined
+  );
 
   return (
     <OrganizationContext.Provider value={{ organization, setOrganization }}>

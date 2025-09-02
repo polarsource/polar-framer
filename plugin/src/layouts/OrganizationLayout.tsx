@@ -2,12 +2,8 @@ import { useEffect, useContext, useCallback } from "react";
 import { Avatar } from "../components/Avatar";
 import { useOrganizations } from "../hooks/organizations";
 import { Link, Outlet, useLocation, useNavigate } from "react-router";
-import {
-  OrganizationContext,
-  PolarAPIContext,
-  queryClient,
-} from "../providers";
-import { Organization } from "@polar-sh/sdk/models/components";
+import { OrganizationContext } from "../providers";
+import { Organization } from "@polar-sh/sdk/models/components/organization";
 import { Button } from "@/components/ui/button";
 import {
   AddOutlined,
@@ -49,14 +45,23 @@ export const OrganizationLayout = ({ onLogout }: { onLogout: () => void }) => {
       <div className="flex p-4 w-full flex-row items-center gap-x-2 border-y dark:border-t-0 dark:border-white/5 border-neutral-100">
         <Link to="/products">
           {shouldRenderBackButton ? (
-            <Button size="icon" className="rounded-full h-8 w-8" variant="ghost">
+            <Button
+              size="icon"
+              className="rounded-full h-8 w-8"
+              variant="ghost"
+            >
               <ArrowBackOutlined fontSize="small" />
             </Button>
           ) : (
-            <Avatar
-              url={organization?.avatarUrl ?? ""}
-              name={organization?.name ?? ""}
-            />
+            <a
+              href={`${baseUrl}/dashboard/${organization?.slug}`}
+              target="_blank"
+            >
+              <Avatar
+                url={organization?.avatarUrl ?? ""}
+                name={organization?.name ?? ""}
+              />
+            </a>
           )}
         </Link>
         <select

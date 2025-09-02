@@ -14,10 +14,8 @@ import {
 } from "react-router";
 import { ProductView } from "./containers/ProductView";
 import { OrganizationLayout } from "./layouts/OrganizationLayout";
-import { CreateProductView } from "./containers/CreateProductView";
 import { OnboardingView } from "./containers/OnboardingView";
 import { Polar } from "@polar-sh/sdk";
-import { EditProductView } from "./containers/EditProductView";
 
 framer.showUI({
   position: "top right",
@@ -51,23 +49,25 @@ const PluginRoutes = () => {
       const apiClient = buildAPIClient(tokens.access_token);
       setApiClient(apiClient);
 
-      queryClient.fetchQuery({
-        queryKey: ["organizations"],
-        queryFn: () => apiClient.organizations.list({ limit: 1 }),
-      }).then((organizations) => {
-        if (organizations.result.items.length === 0) {
-          navigate("/onboarding");
-        } else {
-          navigate("/products");
-        }
-      });
+      queryClient
+        .fetchQuery({
+          queryKey: ["organizations"],
+          queryFn: () => apiClient.organizations.list({ limit: 1 }),
+        })
+        .then((organizations) => {
+          if (organizations.result.items.length === 0) {
+            navigate("/onboarding");
+          } else {
+            navigate("/products");
+          }
+        });
     },
     [navigate]
   );
 
   useEffect(() => {
     const tokens = JSON.parse(localStorage.getItem("tokens") ?? "{}") as Tokens;
-    
+
     if (!tokens.access_token) {
       navigate("/");
     }
@@ -76,13 +76,18 @@ const PluginRoutes = () => {
   return (
     <PolarProviders polar={apiClient}>
       <Routes>
-        <Route index path="/" element={<LoginView onSuccess={onLoginSuccess} />} />
+        <Route
+          index
+          path="/"
+          element={<LoginView onSuccess={onLoginSuccess} />}
+        />
         <Route path="/onboarding" element={<OnboardingView />} />
-        <Route path="/products" element={<OrganizationLayout onLogout={onLogout} />}>
+        <Route
+          path="/products"
+          element={<OrganizationLayout onLogout={onLogout} />}
+        >
           <Route index element={<ProductsView />} />
           <Route path=":id" element={<ProductView />} />
-          <Route path=":id/edit" element={<EditProductView />} />
-          <Route path="new" element={<CreateProductView />} />
         </Route>
         <Route path="*" element={<Navigate to="/" />} />
       </Routes>

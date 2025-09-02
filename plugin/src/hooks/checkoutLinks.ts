@@ -1,11 +1,14 @@
 import { useMutation, useQuery } from "@tanstack/react-query";
-import {
-  CheckoutLink,
-  CheckoutLinkCreate,
-} from "@polar-sh/sdk/models/components";
+import { CheckoutLink } from "@polar-sh/sdk/models/components/checkoutlink";
 import { useContext } from "react";
 import { PolarAPIContext, queryClient } from "@/providers";
-import { CheckoutLinksListRequest, CheckoutLinksUpdateRequest, OrganizationIDFilter, ProductIDFilter } from "@polar-sh/sdk/models/operations";
+import { CheckoutLinksListRequest } from "@polar-sh/sdk/models/operations/checkoutlinkslist";
+import { CheckoutLinksUpdateRequest } from "@polar-sh/sdk/models/operations/checkoutlinksupdate";
+import {
+  OrganizationIDFilter,
+  ProductIDFilter,
+} from "@polar-sh/sdk/models/operations/subscriptionslist";
+import { CheckoutLinkCreateProduct } from "@polar-sh/sdk/models/components/checkoutlinkcreateproduct";
 
 export const useCheckoutLinks = (
   organizationId?: OrganizationIDFilter,
@@ -26,11 +29,13 @@ export const useCheckoutLinks = (
   });
 };
 
-export const useCreateCheckoutLink = (organizationId?: OrganizationIDFilter) => {
+export const useCreateCheckoutLink = (
+  organizationId?: OrganizationIDFilter
+) => {
   const polar = useContext(PolarAPIContext);
 
   return useMutation({
-    mutationFn: (body: CheckoutLinkCreate) => {
+    mutationFn: (body: CheckoutLinkCreateProduct) => {
       return polar.checkoutLinks.create(body);
     },
     onSuccess: () => {
@@ -40,7 +45,9 @@ export const useCreateCheckoutLink = (organizationId?: OrganizationIDFilter) => 
     },
   });
 };
-export const useUpdateCheckoutLink = (organizationId?: OrganizationIDFilter) => {
+export const useUpdateCheckoutLink = (
+  organizationId?: OrganizationIDFilter
+) => {
   const polar = useContext(PolarAPIContext);
 
   return useMutation({
@@ -55,7 +62,9 @@ export const useUpdateCheckoutLink = (organizationId?: OrganizationIDFilter) => 
   });
 };
 
-export const useDeleteCheckoutLink = (organizationId?: OrganizationIDFilter) => {
+export const useDeleteCheckoutLink = (
+  organizationId?: OrganizationIDFilter
+) => {
   const polar = useContext(PolarAPIContext);
 
   return useMutation({
@@ -66,10 +75,7 @@ export const useDeleteCheckoutLink = (organizationId?: OrganizationIDFilter) => 
     },
     onSuccess: () => {
       queryClient.invalidateQueries({
-        queryKey: [
-          "checkout_links",
-          organizationId,
-        ],
+        queryKey: ["checkout_links", organizationId],
       });
     },
   });

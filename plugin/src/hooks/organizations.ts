@@ -1,30 +1,29 @@
-import { OrganizationsListRequest } from "@polar-sh/sdk/models/operations";
+import { OrganizationsListRequest } from "@polar-sh/sdk/models/operations/organizationslist";
 import { useMutation, useQuery } from "@tanstack/react-query";
 import { useContext } from "react";
 import { PolarAPIContext, queryClient } from "../providers";
-import { OrganizationCreate } from "@polar-sh/sdk/models/components";
+import { OrganizationCreate } from "@polar-sh/sdk/models/components/organizationcreate";
 
 export const useOrganizations = (params: OrganizationsListRequest) => {
   const polar = useContext(PolarAPIContext);
- 
+
   return useQuery({
     queryKey: ["organizations", params],
     queryFn: () => polar.organizations.list(params),
   });
-}
-
+};
 
 export const useCreateOrganization = () => {
   const polar = useContext(PolarAPIContext);
 
   return useMutation({
     mutationFn: (body: OrganizationCreate) => {
-      return polar.organizations.create(body)
+      return polar.organizations.create(body);
     },
     onSuccess: async () => {
       queryClient.invalidateQueries({
-        queryKey: ['organizations'],
-      })
+        queryKey: ["organizations"],
+      });
     },
-  })
-}
+  });
+};

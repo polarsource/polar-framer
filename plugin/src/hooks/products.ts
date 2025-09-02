@@ -1,13 +1,18 @@
-import { ProductsListRequest } from "@polar-sh/sdk/models/operations";
+import { ProductsListRequest } from "@polar-sh/sdk/models/operations/productslist";
 import { useQuery, useMutation } from "@tanstack/react-query";
 import { useContext } from "react";
 import { PolarAPIContext, queryClient } from "../providers";
-import { ProductBenefitsUpdate, ProductCreate, ProductUpdate } from "@polar-sh/sdk/models/components";
-import { Organization } from "@polar-sh/sdk/models/components";
+import { ProductBenefitsUpdate } from "@polar-sh/sdk/models/components/productbenefitsupdate";
+import { ProductCreate } from "@polar-sh/sdk/models/components/productcreate";
+import { ProductUpdate } from "@polar-sh/sdk/models/components/productupdate";
+import { Organization } from "@polar-sh/sdk/models/components/organization";
 
-export const useProducts = ({organizationId, ...params}: ProductsListRequest) => {
+export const useProducts = ({
+  organizationId,
+  ...params
+}: ProductsListRequest) => {
   const polar = useContext(PolarAPIContext);
-  
+
   return useQuery({
     queryKey: ["products", organizationId, params],
     queryFn: () => polar.products.list({ organizationId, ...params }),
@@ -28,50 +33,56 @@ export const useProduct = (id?: string) => {
 export const useCreateProduct = (organization?: Organization) => {
   const polar = useContext(PolarAPIContext);
 
-  return  useMutation({
+  return useMutation({
     mutationFn: (body: ProductCreate) => {
-      return polar.products.create(body)
+      return polar.products.create(body);
     },
     onSuccess: async () => {
       queryClient.invalidateQueries({
-        queryKey: ['products', organization?.id],
-      })
+        queryKey: ["products", organization?.id],
+      });
     },
-  })
-}
+  });
+};
 
 export const useUpdateProductBenefits = (organization?: Organization) => {
   const polar = useContext(PolarAPIContext);
 
   return useMutation({
-    mutationFn: ({ id, params }: { id: string; params: ProductBenefitsUpdate }) => {
+    mutationFn: ({
+      id,
+      params,
+    }: {
+      id: string;
+      params: ProductBenefitsUpdate;
+    }) => {
       return polar.products.updateBenefits({
         id,
         productBenefitsUpdate: params,
-      })
+      });
     },
     onSuccess: async () => {
       queryClient.invalidateQueries({
-        queryKey: ['products', organization?.id],
-      })
+        queryKey: ["products", organization?.id],
+      });
     },
-  })
-}
+  });
+};
 
 export const useUpdateProduct = (organization?: Organization) => {
   const polar = useContext(PolarAPIContext);
-  
+
   return useMutation({
     mutationFn: ({ id, body }: { id: string; body: ProductUpdate }) => {
       return polar.products.update({
         id,
         productUpdate: body,
-      })
+      });
     },
     onSuccess: async () => {
       queryClient.invalidateQueries({
-        queryKey: ['products', organization?.id],
-      })
+        queryKey: ["products", organization?.id],
+      });
     },
-  })
-}
+  });
+};
